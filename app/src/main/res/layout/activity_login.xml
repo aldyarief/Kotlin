@@ -1,0 +1,80 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="70dp"
+        android:background="@android:color/transparent"
+        android:elevation="4dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <EditText
+            android:id="@+id/textname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_user"
+            android:hint="Username"
+            android:textColor="#1E90FF"
+            android:backgroundTint="#1E90FF"
+            android:textColorHint="#1E90FF"
+            tools:layout_editor_absoluteX="179dp"
+            tools:layout_editor_absoluteY="124dp" />
+
+        <EditText
+            android:id="@+id/textpass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textname"
+            android:drawableLeft="@drawable/ic_password"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textColor="#1E90FF"
+            android:textColorHint="#1E90FF"
+            android:backgroundTint="#1E90FF" />
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="124dp" />
+
+        <CheckBox
+            android:id="@+id/checkBox1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textpass"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="30dp"
+            android:text="Show Password"
+            android:buttonTint="#1E90FF"
+            android:textColor="#1E90FF"
+            android:textColorHint="#1E90FF" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="Masuk"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="#4169E1"
+            android:layout_below="@+id/checkBox1" />
+        <Button
+            android:id="@+id/btnTutup"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:text="Keluar"
+            android:layout_marginLeft="160dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#4169E1"
+            android:layout_below="@+id/checkBox1" />
+
+    </RelativeLayout>
+</RelativeLayout>
