@@ -40,8 +40,8 @@
             android:textColor="#1E90FF"
             android:textColorHint="#1E90FF"
             android:backgroundTint="#1E90FF" />
-        tools:layout_editor_absoluteX="179dp"
-        tools:layout_editor_absoluteY="124dp" />
+            tools:layout_editor_absoluteX="179dp"
+            tools:layout_editor_absoluteY="124dp" />
 
         <CheckBox
             android:id="@+id/checkBox1"
