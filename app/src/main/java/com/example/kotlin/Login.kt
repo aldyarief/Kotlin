@@ -45,7 +45,7 @@ class Login : AppCompatActivity() {
         textname = findViewById<View>(R.id.textname) as EditText
         textpass = findViewById<View>(R.id.textpass) as EditText
         password = findViewById<View>(R.id.checkBox1) as CheckBox
-        server_url = "http://aldry.agustianra.my.id/Login.php"
+        server_url = "http://aldry.agustianra.my.id/nitip/Login.php"
         pd = ProgressDialog(this)
 
         button!!.setOnClickListener {
