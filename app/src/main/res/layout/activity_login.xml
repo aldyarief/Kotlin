@@ -3,6 +3,8 @@
     android:id="@+id/activity_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bggradient"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Login">
 
     <RelativeLayout
@@ -11,7 +13,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="70dp"
-        android:background="@android:color/transparent"
+        android:background="@color/cardview_light_background"
         android:elevation="4dp"
         android:layout_centerInParent="true"
         android:orientation="vertical"
@@ -23,9 +25,9 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_user"
             android:hint="Username"
-            android:textColor="#1E90FF"
-            android:backgroundTint="#1E90FF"
-            android:textColorHint="#1E90FF"
+            android:textColor="@color/cardview_dark_background"
+            android:backgroundTint="@color/cardview_dark_background"
+            android:textColorHint="@color/cardview_dark_background"
             tools:layout_editor_absoluteX="179dp"
             tools:layout_editor_absoluteY="124dp" />
 
@@ -37,9 +39,9 @@
             android:drawableLeft="@drawable/ic_password"
             android:hint="Password"
             android:inputType="textPassword"
-            android:textColor="#1E90FF"
-            android:textColorHint="#1E90FF"
-            android:backgroundTint="#1E90FF" />
+            android:textColor="@color/cardview_dark_background"
+            android:textColorHint="@color/cardview_dark_background"
+            android:backgroundTint="@color/cardview_dark_background" />
             tools:layout_editor_absoluteX="179dp"
             tools:layout_editor_absoluteY="124dp" />
 
@@ -64,6 +66,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:background="#4169E1"
+            app:fontFamily="sans-serif"
+            android:textColor="@android:color/background_light"
             android:layout_below="@+id/checkBox1" />
         <Button
             android:id="@+id/btnTutup"
@@ -74,6 +78,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:background="#4169E1"
+            android:textColor="@android:color/background_light"
             android:layout_below="@+id/checkBox1" />
 
     </RelativeLayout>
