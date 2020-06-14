@@ -28,6 +28,8 @@
             android:textColor="@color/cardview_dark_background"
             android:backgroundTint="@color/cardview_dark_background"
             android:textColorHint="@color/cardview_dark_background"
+            app:fontFamily="sans-serif"
+            android:textSize="24sp"
             tools:layout_editor_absoluteX="179dp"
             tools:layout_editor_absoluteY="124dp" />
 
@@ -39,6 +41,9 @@
             android:drawableLeft="@drawable/ic_password"
             android:hint="Password"
             android:inputType="textPassword"
+            android:layout_marginTop="12dp"
+            app:fontFamily="sans-serif"
+            android:textSize="24sp"
             android:textColor="@color/cardview_dark_background"
             android:textColorHint="@color/cardview_dark_background"
             android:backgroundTint="@color/cardview_dark_background" />
