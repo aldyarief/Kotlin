@@ -23,9 +23,8 @@ import java.util.*
 
 
 class Login : AppCompatActivity() {
-    var button: Button? = null
-    var button2:android.widget.Button? = null
-    var password: CheckBox? = null
+    var button:com.google.android.material.card.MaterialCardView?= null
+    var button2:com.google.android.material.card.MaterialCardView? = null
     private var textname: EditText? = null
     private  var textpass:EditText? = null
     var server_url: String? = null
@@ -40,11 +39,10 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        button = findViewById<View>(R.id.btnLogin) as Button
-        button2 = findViewById<View>(R.id.btnTutup) as Button
+        button = findViewById<View>(R.id.btnLogin) as com.google.android.material.card.MaterialCardView
+        button2 = findViewById<View>(R.id.btnTutup) as com.google.android.material.card.MaterialCardView
         textname = findViewById<View>(R.id.textname) as EditText
         textpass = findViewById<View>(R.id.textpass) as EditText
-        password = findViewById<View>(R.id.checkBox1) as CheckBox
         server_url = "http://aldry.agustianra.my.id/nitip/Login.php"
         pd = ProgressDialog(this)
 
@@ -63,14 +61,6 @@ class Login : AppCompatActivity() {
         }
 
         button2!!.setOnClickListener { finish() }
-
-        password!!.setOnCheckedChangeListener { buttonView, isChecked -> // TODO Auto-generated method stub
-            if (!isChecked) {
-                textpass!!.transformationMethod = PasswordTransformationMethod.getInstance()
-            } else {
-                textpass!!.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            }
-        }
 
 
     }
