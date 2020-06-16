@@ -1,14 +1,12 @@
 package com.example.kotlin
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -35,7 +33,28 @@ class Login : AppCompatActivity() {
     var jual:kotlin.String? = null
     var koreksi:kotlin.String? = null
     var laporan:kotlin.String? = null
+    var username:kotlin.String? = null
+    var password:kotlin.String? = null
     var pd: ProgressDialog? = null
+
+
+
+    var session = false
+    var key_username:kotlin.String? = null
+    var key_password:kotlin.String? = null
+    var key_userid:kotlin.String? = null
+    var key_user:kotlin.String? = null
+    var key_barang:kotlin.String? = null
+    var key_beli:kotlin.String? = null
+    var key_jual:kotlin.String? = null
+    var key_koreksi:kotlin.String? = null
+    var key_laporan:kotlin.String? = null
+    val session_status = "session_status"
+    val PREFERENCE_NAME = "PREFERENCE_DATA"
+
+    var sharedpreferences = getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
+    var editor = sharedpreferences!!.edit()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -45,6 +64,33 @@ class Login : AppCompatActivity() {
         textpass = findViewById<View>(R.id.textpass) as EditText
         server_url = "http://aldry.agustianra.my.id/nitip/Login.php"
         pd = ProgressDialog(this)
+
+
+        // Cek session login jika TRUE maka langsung buka MainActivity
+        session = sharedpreferences.getBoolean(session_status, false)
+        password = sharedpreferences.getString(key_password, null)
+        username = sharedpreferences.getString(key_username, null)
+        userid = sharedpreferences.getString(key_userid, null)
+        user = sharedpreferences.getString(key_user, null)
+        barang = sharedpreferences.getString(key_barang, null)
+        beli = sharedpreferences.getString(key_beli, null)
+        jual = sharedpreferences.getString(key_jual, null)
+        koreksi = sharedpreferences.getString(key_koreksi, null)
+        laporan = sharedpreferences.getString(key_laporan, null)
+
+
+        if (session==true) {
+            val intent = Intent(this@Login, Dashboard::class.java)
+            intent.putExtra(userid, userid)
+            intent.putExtra(user, user)
+            intent.putExtra(barang, barang)
+            intent.putExtra(beli, beli)
+            intent.putExtra(jual, jual)
+            intent.putExtra(koreksi, koreksi)
+            intent.putExtra(laporan, laporan)
+            finish()
+            startActivity(intent)
+        }
 
         button!!.setOnClickListener {
             val name = textname!!.text.toString().trim { it <= ' ' }
@@ -92,6 +138,19 @@ class Login : AppCompatActivity() {
                             requestQueue.stop()
                             textname!!.text.clear()
                             textpass!!.text.clear()
+
+                            // menyimpan login ke session
+                            editor.putBoolean(session_status, true)
+                            editor.putString(key_username, name)
+                            editor.putString(key_password, pass)
+                            editor.putString(key_userid, userid)
+                            editor.putString(key_user, user)
+                            editor.putString(key_barang, barang)
+                            editor.putString(key_beli, beli)
+                            editor.putString(key_jual, jual)
+                            editor.putString(key_koreksi, koreksi)
+                            editor.putString(key_laporan, laporan)
+                            editor.commit();
                         } else {
                             Toast.makeText(this@Login, pesan, Toast.LENGTH_SHORT).show()
                             requestQueue.stop()
