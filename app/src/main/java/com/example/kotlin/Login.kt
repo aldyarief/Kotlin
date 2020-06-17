@@ -1,10 +1,10 @@
 package com.example.kotlin
 
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -36,9 +36,6 @@ class Login : AppCompatActivity() {
     var username:kotlin.String? = null
     var password:kotlin.String? = null
     var pd: ProgressDialog? = null
-
-
-
     var session = false
     var key_username:kotlin.String? = null
     var key_password:kotlin.String? = null
@@ -49,11 +46,8 @@ class Login : AppCompatActivity() {
     var key_jual:kotlin.String? = null
     var key_koreksi:kotlin.String? = null
     var key_laporan:kotlin.String? = null
-    val session_status = "session_status"
-    val PREFERENCE_NAME = "PREFERENCE_DATA"
-
-    var sharedpreferences = getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
-    var editor = sharedpreferences!!.edit()
+    var sharedPreferences: SharedPreferences? = null
+    val PREFS_FILENAME = "com.example.kotlin"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,18 +59,19 @@ class Login : AppCompatActivity() {
         server_url = "http://aldry.agustianra.my.id/nitip/Login.php"
         pd = ProgressDialog(this)
 
+        sharedPreferences = this.getSharedPreferences(PREFS_FILENAME, 0)
 
         // Cek session login jika TRUE maka langsung buka MainActivity
-        session = sharedpreferences.getBoolean(session_status, false)
-        password = sharedpreferences.getString(key_password, null)
-        username = sharedpreferences.getString(key_username, null)
-        userid = sharedpreferences.getString(key_userid, null)
-        user = sharedpreferences.getString(key_user, null)
-        barang = sharedpreferences.getString(key_barang, null)
-        beli = sharedpreferences.getString(key_beli, null)
-        jual = sharedpreferences.getString(key_jual, null)
-        koreksi = sharedpreferences.getString(key_koreksi, null)
-        laporan = sharedpreferences.getString(key_laporan, null)
+        session = sharedPreferences!!.getBoolean("session_status",false)
+        password = sharedPreferences!!.getString("key_password","-")
+        username = sharedPreferences!!.getString("key_username","-")
+        userid = sharedPreferences!!.getString("key_userid","-")
+        user = sharedPreferences!!.getString("key_user","-")
+        barang = sharedPreferences!!.getString("key_barang","-")
+        beli = sharedPreferences!!.getString("key_beli","-")
+        jual = sharedPreferences!!.getString("key_jual","-")
+        koreksi = sharedPreferences!!.getString("key_koreksi","-")
+        laporan = sharedPreferences!!.getString("key_laporan","-")
 
 
         if (session==true) {
@@ -126,13 +121,14 @@ class Login : AppCompatActivity() {
                         val jObject = JSONObject(response)
                         val pesan = jObject.getString("pesan")
                         val hasil = jObject.getString("result")
-                        userid = jObject.getString("userid")
-                        user = jObject.getString("user")
-                        barang = jObject.getString("barang")
-                        beli = jObject.getString("beli")
-                        jual = jObject.getString("jual")
-                        koreksi = jObject.getString("koreksi")
-                        laporan = jObject.getString("laporan")
+
+                        val userid = jObject.getString("userid")
+                        val user = jObject.getString("user")
+                        val barang = jObject.getString("barang")
+                        val beli = jObject.getString("beli")
+                        val jual = jObject.getString("jual")
+                        val koreksi = jObject.getString("koreksi")
+                        val laporan = jObject.getString("laporan")
                         if (hasil.equals("true", ignoreCase = true)) {
                             KirimData()
                             requestQueue.stop()
@@ -140,17 +136,18 @@ class Login : AppCompatActivity() {
                             textpass!!.text.clear()
 
                             // menyimpan login ke session
-                            editor.putBoolean(session_status, true)
-                            editor.putString(key_username, name)
-                            editor.putString(key_password, pass)
-                            editor.putString(key_userid, userid)
-                            editor.putString(key_user, user)
-                            editor.putString(key_barang, barang)
-                            editor.putString(key_beli, beli)
-                            editor.putString(key_jual, jual)
-                            editor.putString(key_koreksi, koreksi)
-                            editor.putString(key_laporan, laporan)
-                            editor.commit();
+                            val editor = sharedPreferences!!.edit()
+                            editor.putBoolean("session_status",true)
+                            editor.putString("key_username", name)
+                            editor.putString("key_password", pass)
+                            editor.putString("key_userid", userid)
+                            editor.putString("key_user", user)
+                            editor.putString("key_barang", barang)
+                            editor.putString("key_beli", beli)
+                            editor.putString("key_jual", jual)
+                            editor.putString("key_koreksi", koreksi)
+                            editor.putString("key_laporan", laporan)
+                            editor.apply();
                         } else {
                             Toast.makeText(this@Login, pesan, Toast.LENGTH_SHORT).show()
                             requestQueue.stop()

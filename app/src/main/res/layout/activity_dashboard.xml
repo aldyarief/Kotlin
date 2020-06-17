@@ -9,8 +9,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:background="#fcfcfc"
-    android:gravity="center"
-    android:id="@+id/ll">
+    android:gravity="center">
     <LinearLayout
         android:clipToPadding="false"
         android:gravity="center"
@@ -20,9 +19,9 @@
         <com.google.android.material.card.MaterialCardView
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:id="@+id/bankcardId"
+            android:id="@+id/user"
             android:layout_width="160dp"
-            android:layout_height="190dp"
+            android:layout_height="150dp"
             android:layout_margin="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    android:text="Banking"/>
+                    android:text="User"/>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -47,7 +46,8 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="190dp"
+            android:layout_height="150dp"
+            android:id="@+id/barang"
             android:layout_margin="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    android:text="Ideas"/>
+                    android:text="Barang"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
@@ -78,7 +78,8 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="190dp"
+            android:layout_height="150dp"
+            android:id="@+id/beli"
             android:layout_margin="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -88,14 +89,14 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:src="@drawable/ic_password"
+                    android:src="@drawable/ic_pembelian"
                     android:padding="10dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    android:text="Add"/>
+                    android:text="Pembelian"/>
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -103,7 +104,8 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="190dp"
+            android:layout_height="150dp"
+            android:id="@+id/jual"
             android:layout_margin="10dp">
 
             <LinearLayout
@@ -116,13 +118,13 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:padding="10dp"
-                    android:src="@drawable/ic_user" />
+                    android:src="@drawable/ic_penjualan" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Links"
+                    android:text="Penjualan"
                     android:textStyle="bold" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -137,7 +139,8 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="190dp"
+            android:layout_height="150dp"
+            android:id="@+id/koreksi"
             android:layout_margin="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -154,14 +157,15 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    android:text="Add"/>
+                    android:text="Koreksi"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.card.MaterialCardView
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="190dp"
+            android:layout_height="150dp"
+            android:id="@+id/laporan"
             android:layout_margin="10dp">
 
             <LinearLayout
@@ -174,15 +178,47 @@
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:padding="10dp"
-                    android:src="@drawable/ic_user" />
+                    android:src="@drawable/ic_laporan" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Links"
+                    android:text="Laporan"
                     android:textStyle="bold" />
 
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+    <LinearLayout
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.google.android.material.card.MaterialCardView
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_width="320dp"
+            android:layout_height="100dp"
+            android:id="@+id/logout"
+            android:layout_margin="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="54dp"
+                    android:layout_height="54dp"
+                    android:src="@drawable/ic_logout"
+                    android:padding="10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_marginTop="0dp"
+                    android:text="Logout"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
