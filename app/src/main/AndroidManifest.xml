@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".TambahUser"></activity>
+        <activity android:name=".KategoriBarang"></activity>
+        <activity android:name=".Barang" />
+        <activity android:name=".TambahUser" />
         <activity android:name=".Penjualan" />
         <activity android:name=".MasterUser" />
         <activity android:name=".Dashboard" />

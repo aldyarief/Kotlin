@@ -24,6 +24,7 @@ class Dashboard : AppCompatActivity() {
     val PREFS_FILENAME = "com.example.kotlin"
     var masteruser:com.google.android.material.card.MaterialCardView?= null
     var logout:com.google.android.material.card.MaterialCardView?= null
+    var masterbarang:com.google.android.material.card.MaterialCardView?= null
     var sampleImages = intArrayOf(
         R.drawable.iron1,
         R.drawable.iron2,
@@ -45,6 +46,7 @@ class Dashboard : AppCompatActivity() {
         laporan = intent.getStringExtra("laporan")
         sharedPreferences = this.getSharedPreferences(PREFS_FILENAME, 0)
         masteruser = findViewById<View>(R.id.user) as com.google.android.material.card.MaterialCardView
+        masterbarang = findViewById<View>(R.id.barang) as com.google.android.material.card.MaterialCardView
         logout = findViewById<View>(R.id.logout) as com.google.android.material.card.MaterialCardView
 
         val carouselView = findViewById(R.id.carouselView) as CarouselView;
@@ -63,6 +65,10 @@ class Dashboard : AppCompatActivity() {
         masteruser!!.setOnClickListener {
             KirimData()
         }
+
+        masterbarang!!.setOnClickListener {
+            KirimBarang()
+        }
     }
 
     override fun onBackPressed() {
@@ -80,6 +86,13 @@ class Dashboard : AppCompatActivity() {
         intent.putExtra("jual", jual)
         intent.putExtra("koreksi", koreksi)
         intent.putExtra("laporan", laporan)
+        finish()
+        startActivity(intent)
+    }
+
+    private fun KirimBarang() {
+        val intent = Intent(this@Dashboard, Barang::class.java)
+        intent.putExtra("userid", userid)
         finish()
         startActivity(intent)
     }
