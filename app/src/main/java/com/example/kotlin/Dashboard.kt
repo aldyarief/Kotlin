@@ -65,6 +65,10 @@ class Dashboard : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        finish()
+    }
+
     private fun KirimData() {
         val intent = Intent(this@Dashboard, MasterUser::class.java)
         intent.putExtra("name", name)

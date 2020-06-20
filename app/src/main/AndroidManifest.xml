@@ -3,6 +3,7 @@
     package="com.example.kotlin">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MasterUser"></activity>
+        <activity android:name=".TambahUser"></activity>
+        <activity android:name=".Penjualan" />
+        <activity android:name=".MasterUser" />
         <activity android:name=".Dashboard" />
         <activity android:name=".Login">
             <intent-filter>
