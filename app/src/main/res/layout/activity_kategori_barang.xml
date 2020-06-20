@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".KategoriBarang"
+    android:background="#fcfcfc"
+    android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="#fcfcfc"
-    android:gravity="center">
+    tools:context=".KategoriBarang">
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -26,49 +25,69 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/cardview_dark_background"
-            android:hint="Nama Barang"
+            android:hint="Kategori Barang"
             android:textColor="@color/cardview_dark_background"
             android:textColorHint="@color/cardview_dark_background"
-            android:textSize="24sp"
+            android:textSize="18sp"
             app:fontFamily="sans-serif" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/pass_text_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username_text_input_layout"
-        app:passwordToggleEnabled="false">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textharga"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/cardview_dark_background"
-            android:hint="Harga Barang"
-            android:inputType="numberDecimal"
-            android:textColor="@color/cardview_dark_background"
-            android:textColorHint="@color/cardview_dark_background"
-            android:textSize="24sp"
-            app:fontFamily="sans-serif"
-            app:passwordToggleTint="@color/colorAccent" />
-
-    </com.google.android.material.textfield.TextInputLayout>
     <Button
+        android:id="@+id/buttonChoose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pilih Gambar"
         android:layout_below="@+id/edharbar"
-        android:id="@+id/buttonChoose"
-        android:drawableRight="@android:drawable/ic_menu_gallery"/>
+        android:drawableRight="@android:drawable/ic_menu_gallery"
+        android:text="Pilih Gambar" />
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_below="@+id/buttonChoose"
-        android:id="@+id/imageView" />
+        android:layout_weight="1" />
 
+    <LinearLayout
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/btnSave"
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Simpan"
+                    android:textColor="@android:color/background_light"
+                    android:textSize="24sp"
+                    app:fontFamily="sans-serif"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 </LinearLayout>

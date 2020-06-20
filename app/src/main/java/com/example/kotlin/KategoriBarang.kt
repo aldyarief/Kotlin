@@ -38,6 +38,11 @@ class KategoriBarang : AppCompatActivity() {
 
     }
 
+    override fun onBackPressed() {
+        startActivity(Intent(this, Barang::class.java))
+        finish()
+    }
+
     private fun showFileChooser() {
         val intent = Intent()
         intent.type = "image/*"
