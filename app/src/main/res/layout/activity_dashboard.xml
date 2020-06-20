@@ -10,6 +10,16 @@
     android:padding="10dp"
     android:background="#fcfcfc"
     android:gravity="center">
+    <com.synnapps.carouselview.CarouselView
+        android:id="@+id/carouselView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:fillColor="#FFFFFFFF"
+        app:pageColor="#00000000"
+        app:radius="6dp"
+        app:slideInterval="3000"
+        app:strokeColor="#FF777777"
+        app:strokeWidth="1dp"/>
     <LinearLayout
         android:clipToPadding="false"
         android:gravity="center"
@@ -21,7 +31,7 @@
             android:clickable="true"
             android:id="@+id/user"
             android:layout_width="160dp"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:layout_margin="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:text="User"/>
 
             </LinearLayout>
@@ -46,7 +56,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:id="@+id/barang"
             android:layout_margin="10dp">
             <LinearLayout
@@ -63,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:text="Barang"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -78,7 +88,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:id="@+id/beli"
             android:layout_margin="10dp">
             <LinearLayout
@@ -95,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:text="Pembelian"/>
 
             </LinearLayout>
@@ -104,7 +114,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:id="@+id/jual"
             android:layout_margin="10dp">
 
@@ -123,7 +133,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:text="Penjualan"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -139,7 +149,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:id="@+id/koreksi"
             android:layout_margin="10dp">
             <LinearLayout
@@ -156,7 +166,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:text="Koreksi"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -164,7 +174,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:id="@+id/laporan"
             android:layout_margin="10dp">
 
@@ -183,7 +193,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:text="Laporan"
                     android:textStyle="bold" />
 
@@ -200,9 +210,9 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="320dp"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:id="@+id/logout"
-            android:layout_margin="10dp">
+            android:layout_margin="5dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

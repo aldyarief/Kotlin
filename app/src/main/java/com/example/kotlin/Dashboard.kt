@@ -4,7 +4,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.synnapps.carouselview.CarouselView
+import com.synnapps.carouselview.ImageListener
 
 
 class Dashboard : AppCompatActivity() {
@@ -21,6 +24,11 @@ class Dashboard : AppCompatActivity() {
     val PREFS_FILENAME = "com.example.kotlin"
     var masteruser:com.google.android.material.card.MaterialCardView?= null
     var logout:com.google.android.material.card.MaterialCardView?= null
+    var sampleImages = intArrayOf(
+        R.drawable.iron1,
+        R.drawable.iron2,
+        R.drawable.iron3
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +47,9 @@ class Dashboard : AppCompatActivity() {
         masteruser = findViewById<View>(R.id.user) as com.google.android.material.card.MaterialCardView
         logout = findViewById<View>(R.id.logout) as com.google.android.material.card.MaterialCardView
 
+        val carouselView = findViewById(R.id.carouselView) as CarouselView;
+        carouselView.setPageCount(sampleImages.size);
+        carouselView.setImageListener(imageListener);
 
         logout!!.setOnClickListener {
             val editor = sharedPreferences!!.edit()
@@ -67,5 +78,13 @@ class Dashboard : AppCompatActivity() {
         intent.putExtra("laporan", laporan)
         finish()
         startActivity(intent)
+    }
+
+
+    var imageListener: ImageListener = object : ImageListener {
+        override fun setImageForPosition(position: Int, imageView: ImageView) {
+            // You can use Glide or Picasso here
+            imageView.setImageResource(sampleImages[position])
+        }
     }
 }
