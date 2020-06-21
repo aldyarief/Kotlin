@@ -26,9 +26,11 @@ class Dashboard : AppCompatActivity() {
     var logout:com.google.android.material.card.MaterialCardView?= null
     var masterbarang:com.google.android.material.card.MaterialCardView?= null
     var sampleImages = intArrayOf(
-        R.drawable.iron1,
-        R.drawable.iron2,
-        R.drawable.iron3
+        R.drawable.panas1,
+        R.drawable.panas2,
+        R.drawable.panas3,
+        R.drawable.panas4,
+        R.drawable.cola
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

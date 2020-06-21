@@ -13,19 +13,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".KategoriBarang"></activity>
-        <activity android:name=".Barang" />
-        <activity android:name=".TambahUser" />
-        <activity android:name=".Penjualan" />
-        <activity android:name=".MasterUser" />
-        <activity android:name=".Dashboard" />
-        <activity android:name=".Login">
+        <activity android:name=".MainMenu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".KategoriBarang" />
+        <activity android:name=".Barang" />
+        <activity android:name=".TambahUser" />
+        <activity android:name=".Penjualan" />
+        <activity android:name=".MasterUser" />
+        <activity android:name=".Dashboard" />
+        <activity android:name=".Login"/>
     </application>
 
 </manifest>

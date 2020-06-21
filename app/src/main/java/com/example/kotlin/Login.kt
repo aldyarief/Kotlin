@@ -1,10 +1,10 @@
 package com.example.kotlin
 
+import android.R.id.home
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -18,6 +18,7 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
+import android.os.Handler
 
 
 class Login : AppCompatActivity() {
@@ -48,6 +49,7 @@ class Login : AppCompatActivity() {
     var key_laporan:kotlin.String? = null
     var sharedPreferences: SharedPreferences? = null
     val PREFS_FILENAME = "com.example.kotlin"
+    var waktu_loading:kotlin.Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
