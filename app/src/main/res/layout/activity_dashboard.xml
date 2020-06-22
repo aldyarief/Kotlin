@@ -31,7 +31,7 @@
             android:clickable="true"
             android:id="@+id/user"
             android:layout_width="160dp"
-            android:layout_height="100dp"
+            android:layout_height="92dp"
             android:layout_margin="10dp">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,13 +41,13 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:src="@drawable/ic_user"
-                    android:padding="10dp"/>
+                    android:src="@drawable/profile"
+                    android:padding="0dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:text="Profile"/>
 
             </LinearLayout>
@@ -56,7 +56,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="100dp"
+            android:layout_height="92dp"
             android:id="@+id/barang"
             android:layout_margin="10dp">
             <LinearLayout
@@ -67,13 +67,13 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:src="@drawable/ic_password"
-                    android:padding="10dp"/>
+                    android:src="@drawable/barang"
+                    android:padding="0dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:text="Barang"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -88,7 +88,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="100dp"
+            android:layout_height="92dp"
             android:id="@+id/beli"
             android:layout_margin="10dp">
             <LinearLayout
@@ -99,13 +99,13 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:src="@drawable/ic_pembelian"
-                    android:padding="10dp"/>
+                    android:src="@drawable/beli"
+                    android:padding="0dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:text="Pembelian"/>
 
             </LinearLayout>
@@ -114,7 +114,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="100dp"
+            android:layout_height="92dp"
             android:id="@+id/jual"
             android:layout_margin="10dp">
 
@@ -127,13 +127,13 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_penjualan" />
+                    android:padding="0dp"
+                    android:src="@drawable/jual" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:text="Penjualan"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -149,7 +149,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="100dp"
+            android:layout_height="92dp"
             android:id="@+id/koreksi"
             android:layout_margin="10dp">
             <LinearLayout
@@ -160,13 +160,13 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:src="@drawable/ic_password"
-                    android:padding="10dp"/>
+                    android:src="@drawable/koreksi"
+                    android:padding="0dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:text="Koreksi"/>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -174,7 +174,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:layout_width="160dp"
-            android:layout_height="100dp"
+            android:layout_height="92dp"
             android:id="@+id/laporan"
             android:layout_margin="10dp">
 
@@ -187,13 +187,13 @@
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_laporan" />
+                    android:padding="0dp"
+                    android:src="@drawable/report" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:text="Laporan"
                     android:textStyle="bold" />
 
@@ -202,14 +202,14 @@
     </LinearLayout>
     <LinearLayout
         android:clipToPadding="false"
-        android:gravity="center"
+        android:gravity="right"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <com.google.android.material.card.MaterialCardView
             android:foreground="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:layout_width="320dp"
+            android:layout_width="100dp"
             android:layout_height="80dp"
             android:id="@+id/logout"
             android:layout_margin="5dp">
@@ -221,8 +221,8 @@
                 <ImageView
                     android:layout_width="54dp"
                     android:layout_height="54dp"
-                    android:src="@drawable/ic_logout"
-                    android:padding="10dp"/>
+                    android:src="@drawable/exit"
+                    android:padding="0dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

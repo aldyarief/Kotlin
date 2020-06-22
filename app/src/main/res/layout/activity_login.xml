@@ -8,7 +8,7 @@
     tools:context=".Login"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="#fcfcfc"
+    android:background="#FFFFFF"
     android:gravity="center">
 
     <com.google.android.material.card.MaterialCardView
@@ -17,7 +17,7 @@
         android:layout_marginTop="2dp"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        app:cardBackgroundColor="@color/cardview_light_background"
+        app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="15dp"
         app:cardElevation="20dp"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
@@ -33,7 +33,7 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="8dp"
@@ -42,7 +42,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/index" />
+                app:srcCompat="@drawable/retail" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username_text_input_layout"
@@ -100,6 +100,7 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:background="#FFFFFF"
         android:layout_height="100dp">
     <com.google.android.material.card.MaterialCardView
         android:layout_width="160dp"
@@ -113,7 +114,7 @@
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         app:layout_constraintBottom_toTopOf="@+id/btnTutup"
-        app:cardBackgroundColor="@color/colorAccent"
+        app:cardBackgroundColor="#bf000f"
         android:layout_marginTop="5dp"
         android:layout_marginRight="10dp">
 
@@ -151,7 +152,7 @@
         android:id="@+id/btnTutup"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        app:cardBackgroundColor="@color/colorAccent"
+        app:cardBackgroundColor="#bf000f"
         android:layout_marginTop="5dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
