@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
@@ -22,15 +23,13 @@ class Dashboard : AppCompatActivity() {
     var laporan:kotlin.String? = null
     var sharedPreferences: SharedPreferences? = null
     val PREFS_FILENAME = "com.example.kotlin"
-    var masteruser:com.google.android.material.card.MaterialCardView?= null
-    var logout:com.google.android.material.card.MaterialCardView?= null
-    var masterbarang:com.google.android.material.card.MaterialCardView?= null
+    var masteruser:LinearLayout?= null
+    var logout:LinearLayout?= null
+    var masterbarang:LinearLayout?= null
     var sampleImages = intArrayOf(
-        R.drawable.panas1,
-        R.drawable.panas2,
-        R.drawable.panas3,
-        R.drawable.panas4,
-        R.drawable.cola
+        R.drawable.shoppe3,
+        R.drawable.shoppe2,
+        R.drawable.shoppe
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,9 +46,9 @@ class Dashboard : AppCompatActivity() {
         koreksi = intent.getStringExtra("koreksi")
         laporan = intent.getStringExtra("laporan")
         sharedPreferences = this.getSharedPreferences(PREFS_FILENAME, 0)
-        masteruser = findViewById<View>(R.id.user) as com.google.android.material.card.MaterialCardView
-        masterbarang = findViewById<View>(R.id.barang) as com.google.android.material.card.MaterialCardView
-        logout = findViewById<View>(R.id.logout) as com.google.android.material.card.MaterialCardView
+        masteruser = findViewById<View>(R.id.user) as LinearLayout
+        masterbarang = findViewById<View>(R.id.barang) as LinearLayout
+        logout = findViewById<View>(R.id.logout) as LinearLayout
 
         val carouselView = findViewById(R.id.carouselView) as CarouselView;
         carouselView.setPageCount(sampleImages.size);
