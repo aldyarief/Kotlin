@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
@@ -26,6 +27,7 @@ class Dashboard : AppCompatActivity() {
     var masteruser:LinearLayout?= null
     var logout:LinearLayout?= null
     var masterbarang:LinearLayout?= null
+    var lokasi:LinearLayout?= null
     var sampleImages = intArrayOf(
         R.drawable.shoppe3,
         R.drawable.shoppe2,
@@ -49,6 +51,7 @@ class Dashboard : AppCompatActivity() {
         masteruser = findViewById<View>(R.id.user) as LinearLayout
         masterbarang = findViewById<View>(R.id.barang) as LinearLayout
         logout = findViewById<View>(R.id.logout) as LinearLayout
+        lokasi = findViewById<View>(R.id.log) as LinearLayout
 
         val carouselView = findViewById(R.id.carouselView) as CarouselView;
         carouselView.setPageCount(sampleImages.size);
@@ -64,12 +67,18 @@ class Dashboard : AppCompatActivity() {
         }
 
         masteruser!!.setOnClickListener {
-            KirimData()
+            if (user.equals("1", ignoreCase = true)) {
+                KirimData()
+            } else {
+                Toast.makeText(this@Dashboard, "Anda Tidak Memiliki Akses", Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
 
         masterbarang!!.setOnClickListener {
             KirimBarang()
         }
+
     }
 
     override fun onBackPressed() {
@@ -77,17 +86,16 @@ class Dashboard : AppCompatActivity() {
     }
 
     private fun KirimData() {
-        val intent = Intent(this@Dashboard, MasterUser::class.java)
-        intent.putExtra("name", name)
-        intent.putExtra("pass", pass)
-        intent.putExtra("userid", userid)
-        intent.putExtra("user", user)
-        intent.putExtra("barang", barang)
-        intent.putExtra("beli", beli)
-        intent.putExtra("jual", jual)
-        intent.putExtra("koreksi", koreksi)
-        intent.putExtra("laporan", laporan)
-        finish()
+        val intent = Intent(this@Dashboard, Profile::class.java)
+        intent.putExtra("name", name!!.trim())
+        intent.putExtra("pass", pass!!.trim())
+        intent.putExtra("userid", userid!!.trim())
+        intent.putExtra("user", user!!.trim())
+        intent.putExtra("barang", barang!!.trim())
+        intent.putExtra("beli", beli!!.trim())
+        intent.putExtra("jual", jual!!.trim())
+        intent.putExtra("koreksi", koreksi!!.trim())
+        intent.putExtra("laporan", laporan!!.trim())
         startActivity(intent)
     }
 

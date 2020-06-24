@@ -1,6 +1,5 @@
 package com.example.kotlin
 
-import android.R.id.home
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
@@ -18,7 +17,6 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
-import android.os.Handler
 
 
 class Login : AppCompatActivity() {
@@ -78,13 +76,15 @@ class Login : AppCompatActivity() {
 
         if (session==true) {
             val intent = Intent(this@Login, Dashboard::class.java)
-            intent.putExtra(userid, userid)
-            intent.putExtra(user, user)
-            intent.putExtra(barang, barang)
-            intent.putExtra(beli, beli)
-            intent.putExtra(jual, jual)
-            intent.putExtra(koreksi, koreksi)
-            intent.putExtra(laporan, laporan)
+            intent.putExtra("name", username!!.trim())
+            intent.putExtra("pass", password!!.trim())
+            intent.putExtra("userid", userid!!.trim())
+            intent.putExtra("user", user!!.trim())
+            intent.putExtra("barang", barang!!.trim())
+            intent.putExtra("beli", beli!!.trim())
+            intent.putExtra("jual", jual!!.trim())
+            intent.putExtra("koreksi", koreksi!!.trim())
+            intent.putExtra("laporan", laporan!!.trim())
             finish()
             startActivity(intent)
         }
