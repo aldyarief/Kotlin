@@ -195,6 +195,7 @@ class Login : AppCompatActivity() {
         intent.putExtra("jual", jual)
         intent.putExtra("koreksi", koreksi)
         intent.putExtra("laporan", laporan)
+        finish()
         startActivity(intent)
     }
 

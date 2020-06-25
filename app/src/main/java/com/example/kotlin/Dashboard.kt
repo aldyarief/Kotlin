@@ -96,6 +96,7 @@ class Dashboard : AppCompatActivity() {
         intent.putExtra("jual", jual!!.trim())
         intent.putExtra("koreksi", koreksi!!.trim())
         intent.putExtra("laporan", laporan!!.trim())
+        finish()
         startActivity(intent)
     }
 

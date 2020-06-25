@@ -18,6 +18,18 @@
             android:orientation="vertical"
             android:background="#fcfcfc"
             android:gravity="top">
+            <LinearLayout
+                android:clipToPadding="false"
+                android:gravity="top"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:src="@drawable/judulretail"
+                    android:padding="5dp"/>
+            </LinearLayout>
             <com.synnapps.carouselview.CarouselView
                 android:id="@+id/carouselView"
                 android:layout_width="match_parent"
@@ -200,7 +212,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="1000dp"
                 android:orientation="horizontal"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPrimaryDark"
                 android:gravity="top">
 
                 <LinearLayout

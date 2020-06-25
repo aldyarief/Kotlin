@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile"
+    tools:context=".EditUser"
     android:orientation="vertical"
     android:padding="0dp"
     android:background="#fcfcfc"
@@ -38,7 +38,7 @@
                 android:textStyle="bold"
                 android:layout_marginTop="0dp"
                 android:id="@+id/judul"
-                android:text="Informasi Profile"
+                android:text="Ganti Password"
                 android:layout_marginBottom="5dp"
                 tools:ignore="MissingConstraints"
                 android:textColor="#6495ED"/>
@@ -57,9 +57,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/cardview_dark_background"
-                    android:hint="Username"
+                    android:hint="Password Lama"
                     android:textColor="@color/cardview_dark_background"
                     android:textColorHint="@color/cardview_dark_background"
+                    android:inputType="textPassword"
                     android:textSize="24sp"
                     app:fontFamily="sans-serif" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -79,7 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/cardview_dark_background"
-                    android:hint="Password"
+                    android:hint="Password Baru"
                     android:inputType="textPassword"
                     android:textColor="@color/cardview_dark_background"
                     android:textColorHint="@color/cardview_dark_background"
@@ -106,17 +107,17 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:id="@+id/textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:text="Ganti Kata Sandi"
+                        android:text="Simpan"
                         android:textColor="@android:color/background_light"
                         android:textSize="24sp"
                         app:fontFamily="sans-serif"
-                        android:drawableRight="@drawable/ic_sandi"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
