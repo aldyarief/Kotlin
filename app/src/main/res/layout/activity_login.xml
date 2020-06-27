@@ -13,7 +13,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_height="380dp"
         android:layout_marginTop="2dp"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
@@ -92,6 +92,19 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <CheckBox android:id="@+id/checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/pass_text_input_layout"
+                android:text="Remember Me"
+                android:buttonTint="#424242"
+                android:textColor="@color/cardview_dark_background"
+                android:textColorHint="#1E90FF"
+                tools:ignore="MissingConstraints"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -102,6 +115,7 @@
         android:layout_width="match_parent"
         android:background="#FFFFFF"
         android:layout_height="100dp">
+
     <com.google.android.material.card.MaterialCardView
         android:layout_width="160dp"
         android:layout_height="50dp"

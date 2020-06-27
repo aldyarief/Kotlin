@@ -10,6 +10,15 @@
     android:background="#fcfcfc"
     android:gravity="top">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Ganti Password"
+        android:background="@drawable/backheader"
+        android:id="@+id/header"
+        android:textSize="30sp"
+        android:textColor="#FFFFFF"
+        app:fontFamily="sans-serif"/>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="400dp"
@@ -26,7 +35,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.95"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:layout_below="@+id/header">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -53,7 +63,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/judul"
                 tools:ignore="MissingConstraints">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtname"
+                    android:id="@+id/txtpaslama"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/cardview_dark_background"
@@ -76,7 +86,7 @@
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/txtpass"
+                    android:id="@+id/txtpasbaru"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/cardview_dark_background"

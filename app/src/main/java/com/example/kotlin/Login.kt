@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -48,6 +49,7 @@ class Login : AppCompatActivity() {
     var sharedPreferences: SharedPreferences? = null
     val PREFS_FILENAME = "com.example.kotlin"
     var waktu_loading:kotlin.Long? = null
+    var ckbox: CheckBox? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +60,7 @@ class Login : AppCompatActivity() {
         textpass = findViewById<View>(R.id.textpass) as EditText
         server_url = "http://aldry.agustianra.my.id/nitip/Login.php"
         pd = ProgressDialog(this)
-
+        ckbox = findViewById<View>(R.id.checkbox) as CheckBox
         sharedPreferences = this.getSharedPreferences(PREFS_FILENAME, 0)
 
         // Cek session login jika TRUE maka langsung buka MainActivity
@@ -139,6 +141,12 @@ class Login : AppCompatActivity() {
 
                             // menyimpan login ke session
                             val editor = sharedPreferences!!.edit()
+
+                            if (ckbox!!.isChecked()) {
+                                editor.putBoolean("session_status",true)
+                            } else {
+                                editor.putBoolean("session_status",false)
+                            }
                             editor.putBoolean("session_status",true)
                             editor.putString("key_username", name)
                             editor.putString("key_password", pass)
