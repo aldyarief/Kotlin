@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fcfcfc"
-    android:gravity="center"
+    android:gravity="top"
     android:orientation="vertical"
     android:padding="10dp"
     tools:context=".KategoriBarang">
@@ -32,20 +32,6 @@
             app:fontFamily="sans-serif" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/buttonChoose"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edharbar"
-        android:drawableRight="@android:drawable/ic_menu_gallery"
-        android:text="Pilih Gambar" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonChoose"
-        android:layout_weight="1" />
 
     <LinearLayout
         android:clipToPadding="false"

@@ -28,6 +28,7 @@ class Dashboard : AppCompatActivity() {
     var logout:LinearLayout?= null
     var masterbarang:LinearLayout?= null
     var lokasi:LinearLayout?= null
+    var kategoribarang:LinearLayout?= null
     var sampleImages = intArrayOf(
         R.drawable.shoppe3,
         R.drawable.shoppe2,
@@ -51,7 +52,7 @@ class Dashboard : AppCompatActivity() {
         masteruser = findViewById<View>(R.id.user) as LinearLayout
         masterbarang = findViewById<View>(R.id.barang) as LinearLayout
         logout = findViewById<View>(R.id.logout) as LinearLayout
-        lokasi = findViewById<View>(R.id.log) as LinearLayout
+        kategoribarang = findViewById<View>(R.id.kategori) as LinearLayout
 
         val carouselView = findViewById(R.id.carouselView) as CarouselView;
         carouselView.setPageCount(sampleImages.size);
@@ -73,6 +74,22 @@ class Dashboard : AppCompatActivity() {
                 Toast.makeText(this@Dashboard, "Anda Tidak Memiliki Akses", Toast.LENGTH_SHORT)
                     .show()
             }
+        }
+
+
+        kategoribarang!!.setOnClickListener {
+            val intent = Intent(this@Dashboard, KategoriBarang::class.java)
+            intent.putExtra("name", name!!.trim())
+            intent.putExtra("pass", pass!!.trim())
+            intent.putExtra("userid", userid!!.trim())
+            intent.putExtra("user", user!!.trim())
+            intent.putExtra("barang", barang!!.trim())
+            intent.putExtra("beli", beli!!.trim())
+            intent.putExtra("jual", jual!!.trim())
+            intent.putExtra("koreksi", koreksi!!.trim())
+            intent.putExtra("laporan", laporan!!.trim())
+            finish()
+            startActivity(intent)
         }
 
         masterbarang!!.setOnClickListener {

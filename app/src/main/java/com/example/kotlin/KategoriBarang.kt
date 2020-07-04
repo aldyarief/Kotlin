@@ -1,110 +1,134 @@
 package com.example.kotlin
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.AuthFailureError
+import com.android.volley.Response
+import com.android.volley.VolleyLog
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.util.HashMap
 
 class KategoriBarang : AppCompatActivity() {
 
-    var txt_name: EditText? = null
-    var imageView: ImageView? = null
-    var buttonChoose: Button? = null
-    var bitmap: Bitmap? = null
-    var decoded:Bitmap? = null
-    var success = 0
-    var PICK_IMAGE_REQUEST = 1
-    var bitmap_size = 60 // range 1 - 100
+    var buttonsave: com.google.android.material.card.MaterialCardView?= null
+    var server_url: String? = null
+    var userid:kotlin.String? = null
+    var user:kotlin.String? = null
+    var barang:kotlin.String? = null
+    var beli:kotlin.String? = null
+    var jual:kotlin.String? = null
+    var koreksi:kotlin.String? = null
+    var laporan:kotlin.String? = null
+    var username:kotlin.String? = null
+    var password:kotlin.String? = null
+    var pd: ProgressDialog? = null
+    private var textname: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kategori_barang)
 
-        buttonChoose = findViewById<View>(R.id.buttonChoose) as Button
-        imageView = findViewById<View>(R.id.imageView) as ImageView
+        userid = intent.getStringExtra("userid")
+        user = intent.getStringExtra("user")
+        barang = intent.getStringExtra("barang")
+        beli = intent.getStringExtra("beli")
+        jual = intent.getStringExtra("jual")
+        koreksi = intent.getStringExtra("koreksi")
+        laporan = intent.getStringExtra("laporan")
+        buttonsave = findViewById<View>(R.id.btnSave) as com.google.android.material.card.MaterialCardView
+        server_url = "http://aldry.agustianra.my.id/nitip/kategori.php"
+        pd = ProgressDialog(this)
+        textname = findViewById<View>(R.id.textname) as EditText
 
-        buttonChoose!!.setOnClickListener { showFileChooser() }
+        buttonsave!!.setOnClickListener {
+            val name = textname!!.text.toString().trim { it <= ' ' }
 
+            if (!name.isEmpty()) {
+                simpanData(name,userid!!)
+            } else if (name.isEmpty()) {
+                textname!!.error = "username tidak boleh kosong"
+                textname!!.requestFocus()
+            }
+        }
     }
+
+    private fun simpanData(name: String,userid: String) {
+        val requestQueue = Volley.newRequestQueue(this@KategoriBarang)
+        pd!!.setCancelable(false)
+        pd!!.setMessage("Harap Menunggu...")
+        showDialog()
+        val stringRequest: StringRequest =
+            object : StringRequest(
+                Method.POST, server_url,
+                Response.Listener { response ->
+                    Log.d("response", response)
+                    hideDialog()
+                    try {
+                        val jObject = JSONObject(response)
+                        val pesan = jObject.getString("pesan")
+                        val hasil = jObject.getString("result")
+
+                        if (hasil.equals("true", ignoreCase = true)) {
+                            requestQueue.stop()
+                            Toast.makeText(this@KategoriBarang, pesan, Toast.LENGTH_SHORT).show()
+                            textname!!.text.clear()
+                        } else {
+                            Toast.makeText(this@KategoriBarang, pesan, Toast.LENGTH_SHORT).show()
+                            requestQueue.stop()
+                            textname!!.text.clear()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                        Toast.makeText(this@KategoriBarang, "Error JSON", Toast.LENGTH_SHORT).show()
+                    }
+                }, Response.ErrorListener { error ->
+                    VolleyLog.d("ERROR", error.message)
+                    Toast.makeText(this@KategoriBarang, error.message, Toast.LENGTH_SHORT).show()
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getParams(): Map<String, String> {
+                    val param: MutableMap<String, String> =
+                        HashMap()
+                    param["name"] = name
+                    param["userid"] = userid
+                    return param
+                }
+            }
+        requestQueue.add(stringRequest)
+    }
+
+
+    private fun showDialog() {
+        if (!pd!!.isShowing) pd!!.show()
+    }
+
+
+    private fun hideDialog() {
+        if (pd!!.isShowing) pd!!.dismiss()
+    }
+
 
     override fun onBackPressed() {
         startActivity(Intent(this, Barang::class.java))
         finish()
     }
-
-    private fun showFileChooser() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST)
-    }
-
-    fun getStringImage(bmp: Bitmap): String? {
-        val baos = ByteArrayOutputStream()
-        bmp.compress(Bitmap.CompressFormat.JPEG, bitmap_size, baos)
-        val imageBytes = baos.toByteArray()
-        return Base64.encodeToString(imageBytes, Base64.DEFAULT)
-    }
-
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
-    ) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-            val filePath = data.data
-            try {
-                //mengambil fambar dari Gallery
-                bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filePath)
-                // 512 adalah resolusi tertinggi setelah image di resize, bisa di ganti.
-                setToImageView(getResizedBitmap(bitmap!!, 512))
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
-    }
-
-    private fun kosong() {
-        imageView!!.setImageResource(0)
-        txt_name!!.setText(null)
-    }
-
-    private fun setToImageView(bmp: Bitmap) {
-        //compress image
-        val bytes = ByteArrayOutputStream()
-        bmp.compress(Bitmap.CompressFormat.JPEG, bitmap_size, bytes)
-        decoded = BitmapFactory.decodeStream(ByteArrayInputStream(bytes.toByteArray()))
-
-        //menampilkan gambar yang dipilih dari camera/gallery ke ImageView
-        imageView!!.setImageBitmap(decoded)
-    }
-
-    // fungsi resize image
-    fun getResizedBitmap(image: Bitmap, maxSize: Int): Bitmap {
-        var width = image.width
-        var height = image.height
-        val bitmapRatio = width.toFloat() / height.toFloat()
-        if (bitmapRatio > 1) {
-            width = maxSize
-            height = (width / bitmapRatio).toInt()
-        } else {
-            height = maxSize
-            width = (height * bitmapRatio).toInt()
-        }
-        return Bitmap.createScaledBitmap(image, width, height, true)
-    }
-
-
 }
