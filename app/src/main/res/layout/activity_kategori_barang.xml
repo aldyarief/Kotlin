@@ -76,4 +76,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
+    <ListView
+        android:id="@+id/listViewProgramming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" >
+    </ListView>
 </LinearLayout>
