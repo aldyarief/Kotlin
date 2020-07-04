@@ -95,6 +95,8 @@ class KategoriBarang : AppCompatActivity() {
                             requestQueue.stop()
                             Toast.makeText(this@KategoriBarang, pesan, Toast.LENGTH_SHORT).show()
                             textname!!.text.clear()
+                            kategori!!.clear()
+                            AmbilKategori()
                         } else {
                             Toast.makeText(this@KategoriBarang, pesan, Toast.LENGTH_SHORT).show()
                             requestQueue.stop()
@@ -188,7 +190,7 @@ class KategoriBarang : AppCompatActivity() {
             }
         }
 
-        //Setting adapter to show the items in the spinner
+        //Setting adapter to show the items in the listview
         val arrayAdapter= ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,kategori!!);
         listView!!.setAdapter(arrayAdapter)
     }
