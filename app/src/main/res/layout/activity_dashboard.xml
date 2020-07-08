@@ -41,24 +41,16 @@
                 app:strokeColor="#FF777777"
                 app:strokeWidth="1dp" />
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:id="@+id/menu"
-                android:layout_below="@id/carouselView"
-                android:layout_marginTop="20dp"
-                tools:ignore="UselessParent">
                 <LinearLayout
                     android:clipToPadding="false"
                     android:gravity="center"
                     android:orientation="horizontal"
+                    android:layout_below="@id/carouselView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="110dp"
+                        android:layout_height="100dp"
                         android:orientation="vertical"
                         android:id="@+id/user"
                         android:foreground="?android:attr/selectableItemBackground"
@@ -78,10 +70,10 @@
                             android:text="Profile"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="110dp"
+                        android:layout_height="100dp"
                         android:orientation="vertical"
-                        android:id="@+id/kategori"
+                        android:id="@+id/katbrg"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp"
@@ -89,7 +81,7 @@
                         <ImageView
                             android:layout_width="64dp"
                             android:layout_height="64dp"
-                            android:src="@drawable/kategori"
+                            android:src="@drawable/katbar"
                             android:padding="10dp"/>
                         <TextView
                             android:layout_width="wrap_content"
@@ -99,8 +91,8 @@
                             android:text="Kategori Barang"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="110dp"
+                        android:layout_height="100dp"
                         android:orientation="vertical"
                         android:id="@+id/barang"
                         android:foreground="?android:attr/selectableItemBackground"
@@ -117,11 +109,18 @@
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
                             android:layout_marginTop="2dp"
-                            android:text="Barang"/>
+                            android:text="Master Barang"/>
                     </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:clipToPadding="false"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="110dp"
+                        android:layout_height="100dp"
                         android:orientation="vertical"
                         android:id="@+id/beli"
                         android:foreground="?android:attr/selectableItemBackground"
@@ -141,8 +140,8 @@
                             android:text="Pembelian"/>
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="110dp"
+                        android:layout_height="100dp"
                         android:gravity="center"
                         android:id="@+id/jual"
                         android:foreground="?android:attr/selectableItemBackground"
@@ -164,8 +163,8 @@
                             android:textStyle="bold" />
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="110dp"
+                        android:layout_height="100dp"
                         android:orientation="vertical"
                         android:foreground="?android:attr/selectableItemBackground"
                         android:id="@+id/koreksi"
@@ -184,9 +183,16 @@
                             android:layout_marginTop="2dp"
                             android:text="Koreksi"/>
                     </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:clipToPadding="false"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="110dp"
+                        android:layout_height="100dp"
                         android:gravity="center"
                         android:id="@+id/laporan"
                         android:foreground="?android:attr/selectableItemBackground"
@@ -207,8 +213,8 @@
                             android:textStyle="bold" />
                     </LinearLayout>
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_width="110dp"
+                        android:layout_height="100dp"
                         android:orientation="vertical"
                         android:id="@+id/logout"
                         android:foreground="?android:attr/selectableItemBackground"
@@ -228,7 +234,6 @@
                             android:text="Logout"/>
                     </LinearLayout>
                 </LinearLayout>
-            </HorizontalScrollView>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

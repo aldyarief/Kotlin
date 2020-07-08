@@ -27,8 +27,8 @@ class Dashboard : AppCompatActivity() {
     var masteruser:LinearLayout?= null
     var logout:LinearLayout?= null
     var masterbarang:LinearLayout?= null
+    var katbar:LinearLayout?= null
     var lokasi:LinearLayout?= null
-    var kategoribarang:LinearLayout?= null
     var sampleImages = intArrayOf(
         R.drawable.shoppe3,
         R.drawable.shoppe2,
@@ -51,8 +51,9 @@ class Dashboard : AppCompatActivity() {
         sharedPreferences = this.getSharedPreferences(PREFS_FILENAME, 0)
         masteruser = findViewById<View>(R.id.user) as LinearLayout
         masterbarang = findViewById<View>(R.id.barang) as LinearLayout
+        katbar = findViewById<View>(R.id.katbrg) as LinearLayout
         logout = findViewById<View>(R.id.logout) as LinearLayout
-        kategoribarang = findViewById<View>(R.id.kategori) as LinearLayout
+
 
         val carouselView = findViewById(R.id.carouselView) as CarouselView;
         carouselView.setPageCount(sampleImages.size);
@@ -76,13 +77,14 @@ class Dashboard : AppCompatActivity() {
             }
         }
 
-
-        kategoribarang!!.setOnClickListener {
+        masterbarang!!.setOnClickListener {
             KirimBarang()
         }
 
-        masterbarang!!.setOnClickListener {
-
+        katbar!!.setOnClickListener {
+            val intent = Intent(this@Dashboard, KategoriBarang::class.java)
+            finish()
+            startActivity(intent)
         }
 
     }
@@ -107,16 +109,8 @@ class Dashboard : AppCompatActivity() {
     }
 
     private fun KirimBarang() {
-        val intent = Intent(this@Dashboard, KategoriBarang::class.java)
-        intent.putExtra("name", name!!.trim())
-        intent.putExtra("pass", pass!!.trim())
-        intent.putExtra("userid", userid!!.trim())
-        intent.putExtra("user", user!!.trim())
-        intent.putExtra("barang", barang!!.trim())
-        intent.putExtra("beli", beli!!.trim())
-        intent.putExtra("jual", jual!!.trim())
-        intent.putExtra("koreksi", koreksi!!.trim())
-        intent.putExtra("laporan", laporan!!.trim())
+        val intent = Intent(this@Dashboard, Barang::class.java)
+        intent.putExtra("userid", userid)
         finish()
         startActivity(intent)
     }
