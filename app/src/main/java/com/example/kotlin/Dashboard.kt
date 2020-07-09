@@ -110,7 +110,15 @@ class Dashboard : AppCompatActivity() {
 
     private fun KirimBarang() {
         val intent = Intent(this@Dashboard, Barang::class.java)
-        intent.putExtra("userid", userid)
+        intent.putExtra("name", name!!.trim())
+        intent.putExtra("pass", pass!!.trim())
+        intent.putExtra("userid", userid!!.trim())
+        intent.putExtra("user", user!!.trim())
+        intent.putExtra("barang", barang!!.trim())
+        intent.putExtra("beli", beli!!.trim())
+        intent.putExtra("jual", jual!!.trim())
+        intent.putExtra("koreksi", koreksi!!.trim())
+        intent.putExtra("laporan", laporan!!.trim())
         finish()
         startActivity(intent)
     }
