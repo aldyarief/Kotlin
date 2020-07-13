@@ -1,6 +1,7 @@
 package com.example.kotlin
 
 import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -19,6 +20,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.text.NumberFormat
 import java.util.*
+import androidx.appcompat.app.AlertDialog
 
 
 class Barang : AppCompatActivity () {
@@ -63,7 +65,7 @@ class Barang : AppCompatActivity () {
         textname = findViewById(R.id.nambar) as EditText
         textharga = findViewById(R.id.harbar) as EditText
         buttonsave = findViewById<View>(R.id.btnSave) as com.google.android.material.card.MaterialCardView
-        server_url = "http://aldry.agustianra.my.id/nitip/kategori.php"
+        server_url = "http://aldry.agustianra.my.id/nitip/barang.php"
 
         Spinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             //this method will execute when we pic an item from the spinner
@@ -85,7 +87,7 @@ class Barang : AppCompatActivity () {
 
 
             if (!name.isEmpty() && !harbar.isEmpty()) {
-                simpanData(name,harbar,katbar,userid!!)
+                showDialog()
             } else if (name.isEmpty()) {
                 textname!!.error = "nama barang tidak boleh kosong"
                 textname!!.requestFocus()
@@ -101,7 +103,7 @@ class Barang : AppCompatActivity () {
         val requestQueue = Volley.newRequestQueue(this@Barang)
         pd!!.setCancelable(false)
         pd!!.setMessage("Harap Menunggu...")
-        showDialog()
+
         val stringRequest: StringRequest =
             object : StringRequest(
                 Method.POST, server_url,
@@ -117,7 +119,9 @@ class Barang : AppCompatActivity () {
                             requestQueue.stop()
                             Toast.makeText(this@Barang, pesan, Toast.LENGTH_SHORT).show()
                             textname!!.text.clear()
+                            textharga!!.text.clear()
                             kategori!!.clear()
+                            textname!!.requestFocus()
                             AmbilKategori()
                         } else {
                             Toast.makeText(this@Barang, pesan, Toast.LENGTH_SHORT).show()
@@ -137,7 +141,10 @@ class Barang : AppCompatActivity () {
                     val param: MutableMap<String, String> =
                         HashMap()
                     param["name"] = name
+                    param["harbar"] = harbar
+                    param["katbar"] = katbar
                     param["userid"] = userid
+
                     return param
                 }
             }
@@ -145,9 +152,38 @@ class Barang : AppCompatActivity () {
     }
 
 
-    private fun showDialog() {
-        if (!pd!!.isShowing) pd!!.show()
+    private fun showDialog(){
+        // Late initialize an alert dialog object
+        lateinit var dialog:AlertDialog
+        val name = textname!!.text.toString().trim { it <= ' ' }
+        val harbar = textharga!!.text.toString().trim { it <= ' '}
+        val katbar = kategoriid!!.text.toString().trim { it <= ' '}
+
+        // Initialize a new instance of alert dialog builder object
+        val builder = AlertDialog.Builder(this)
+        // Set a title for alert dialog
+        builder.setTitle("Master Barang")
+        // Set a message for alert dialog
+        builder.setMessage("Yakin anda menyimpan data barang?")
+
+        // On click listener for dialog buttons
+        val dialogClickListener = DialogInterface.OnClickListener{_,which ->
+            when(which){
+                DialogInterface.BUTTON_POSITIVE -> simpanData(name,harbar,katbar,userid!!)
+                DialogInterface.BUTTON_NEGATIVE -> dialog.dismiss();
+            }
+        }
+
+        // Set the alert dialog positive/yes button
+        builder.setPositiveButton("YES",dialogClickListener)
+        // Set the alert dialog negative/no button
+        builder.setNegativeButton("NO",dialogClickListener)
+        // Initialize the AlertDialog using builder object
+        dialog = builder.create()
+        // Finally, display the alert dialog
+        dialog.show()
     }
+
 
 
     private fun hideDialog() {
@@ -217,6 +253,15 @@ class Barang : AppCompatActivity () {
 
     override fun onBackPressed() {
         startActivity(Intent(this, Dashboard::class.java))
+        intent.putExtra("name", name!!.trim())
+        intent.putExtra("pass", pass!!.trim())
+        intent.putExtra("userid", userid!!.trim())
+        intent.putExtra("user", user!!.trim())
+        intent.putExtra("barang", barang!!.trim())
+        intent.putExtra("beli", beli!!.trim())
+        intent.putExtra("jual", jual!!.trim())
+        intent.putExtra("koreksi", koreksi!!.trim())
+        intent.putExtra("laporan", laporan!!.trim())
         finish()
     }
 

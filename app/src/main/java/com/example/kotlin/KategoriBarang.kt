@@ -1,6 +1,7 @@
 package com.example.kotlin
 
 import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
@@ -67,7 +69,7 @@ class KategoriBarang : AppCompatActivity() {
             val name = textname!!.text.toString().trim { it <= ' ' }
 
             if (!name.isEmpty()) {
-                simpanData(name,userid!!)
+                showDialog()
             } else if (name.isEmpty()) {
                 textname!!.error = "username tidak boleh kosong"
                 textname!!.requestFocus()
@@ -79,7 +81,6 @@ class KategoriBarang : AppCompatActivity() {
         val requestQueue = Volley.newRequestQueue(this@KategoriBarang)
         pd!!.setCancelable(false)
         pd!!.setMessage("Harap Menunggu...")
-        showDialog()
         val stringRequest: StringRequest =
             object : StringRequest(
                 Method.POST, server_url,
@@ -123,8 +124,34 @@ class KategoriBarang : AppCompatActivity() {
     }
 
 
-    private fun showDialog() {
-        if (!pd!!.isShowing) pd!!.show()
+    private fun showDialog(){
+        // Late initialize an alert dialog object
+        lateinit var dialog: AlertDialog
+        val name = textname!!.text.toString().trim { it <= ' ' }
+
+        // Initialize a new instance of alert dialog builder object
+        val builder = AlertDialog.Builder(this)
+        // Set a title for alert dialog
+        builder.setTitle("Master Kategori Barang")
+        // Set a message for alert dialog
+        builder.setMessage("Yakin anda menyimpan kategori barang?")
+
+        // On click listener for dialog buttons
+        val dialogClickListener = DialogInterface.OnClickListener{ _, which ->
+            when(which){
+                DialogInterface.BUTTON_POSITIVE -> simpanData(name,userid!!)
+                DialogInterface.BUTTON_NEGATIVE -> dialog.dismiss();
+            }
+        }
+
+        // Set the alert dialog positive/yes button
+        builder.setPositiveButton("YES",dialogClickListener)
+        // Set the alert dialog negative/no button
+        builder.setNegativeButton("NO",dialogClickListener)
+        // Initialize the AlertDialog using builder object
+        dialog = builder.create()
+        // Finally, display the alert dialog
+        dialog.show()
     }
 
 
