@@ -21,6 +21,7 @@ import org.json.JSONObject
 import java.text.NumberFormat
 import java.util.*
 import androidx.appcompat.app.AlertDialog
+import kotlinx.android.synthetic.main.list_barang.view.*
 
 
 class Barang : AppCompatActivity () {
@@ -271,6 +272,5 @@ class Barang : AppCompatActivity () {
         finish()
         startActivity(intent)
     }
-
 
 }
