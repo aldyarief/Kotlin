@@ -21,6 +21,10 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
+import kotlinx.android.synthetic.main.list_kategori.view.*
+import kotlinx.android.synthetic.main.activity_kategori_barang.*
+import androidx.recyclerview.widget.LinearLayoutManager
+
 
 class KategoriBarang : AppCompatActivity() {
 
@@ -43,6 +47,7 @@ class KategoriBarang : AppCompatActivity() {
     private var textname: EditText? = null
     private var kategori: ArrayList<String>? = null
     private var result: JSONArray? = null
+    val kat = ArrayList<DataKategori>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,8 +67,10 @@ class KategoriBarang : AppCompatActivity() {
         server_url = "http://aldry.agustianra.my.id/nitip/kategori.php"
         pd = ProgressDialog(this)
         textname = findViewById<View>(R.id.textname) as EditText
-        listView= findViewById(R.id.listViewProgramming) as ListView
         kategori = ArrayList()
+
+        mRecyclerKategori.setHasFixedSize(true)
+        mRecyclerKategori.layoutManager = LinearLayoutManager(this)
 
         buttonsave!!.setOnClickListener {
             val name = textname!!.text.toString().trim { it <= ' ' }
@@ -211,14 +218,17 @@ class KategoriBarang : AppCompatActivity() {
         for (i in 0 until j.length()) {
             try {
                 val json = j.getJSONObject(i)
-                kategori!!.add(json.getString("nama"))
+                kat.add(DataKategori(json.getString("nama")))
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
         }
 
         //Setting adapter to show the items in the listview
-        val arrayAdapter= ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,kategori!!);
-        listView!!.setAdapter(arrayAdapter)
+        val adapter = KategoriAdapter(kat)
+        adapter.notifyDataSetChanged()
+
+        //tampilkan data dalam recycler view
+        mRecyclerKategori.adapter = adapter
     }
 }

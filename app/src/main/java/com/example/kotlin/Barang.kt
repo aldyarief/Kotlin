@@ -277,13 +277,6 @@ class Barang : AppCompatActivity () {
         finish()
     }
 
-    private fun KirimData() {
-        val intent = Intent(this@Barang, KategoriBarang::class.java)
-        intent.putExtra("userid", userid)
-        finish()
-        startActivity(intent)
-    }
-
 
     private fun AmbilBarang() {
         server_barang = "http://aldry.agustianra.my.id/nitip/ambilbarang.php"
