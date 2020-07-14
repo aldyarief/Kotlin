@@ -22,9 +22,22 @@ import java.text.NumberFormat
 import java.util.*
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.list_barang.view.*
+import kotlinx.android.synthetic.main.activity_barang.*
+import androidx.recyclerview.widget.LinearLayoutManager
 
 
 class Barang : AppCompatActivity () {
+
+    val list = ArrayList<DataBarang>()
+
+    val listBarang = arrayOf(
+        "Google",
+        "Apple",
+        "Microsoft",
+        "Asus",
+        "Zenpone",
+        "Acer"
+    )
     var name: String? = null
     var pass:kotlin.String? = null
     var server_kategori: String? = null
@@ -44,6 +57,7 @@ class Barang : AppCompatActivity () {
     private var textharga: EditText? = null
     var buttonsave: com.google.android.material.card.MaterialCardView?= null
     var server_url: String? = null
+    var server_barang: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +81,10 @@ class Barang : AppCompatActivity () {
         textharga = findViewById(R.id.harbar) as EditText
         buttonsave = findViewById<View>(R.id.btnSave) as com.google.android.material.card.MaterialCardView
         server_url = "http://aldry.agustianra.my.id/nitip/barang.php"
+        mRecyclerView.setHasFixedSize(true)
+        mRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        AmbilBarang()
 
         Spinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             //this method will execute when we pic an item from the spinner
@@ -272,5 +290,59 @@ class Barang : AppCompatActivity () {
         finish()
         startActivity(intent)
     }
+
+
+    private fun AmbilBarang() {
+        server_barang = "http://aldry.agustianra.my.id/nitip/ambilbarang.php"
+        val requestQueue = Volley.newRequestQueue(this@Barang)
+        val stringRequest: StringRequest =
+            object : StringRequest(
+                Method.POST, server_barang,
+                Response.Listener { response ->
+                    Log.d("response", response)
+                    hideDialog()
+                    var j: JSONObject? = null
+                    try {
+                        j = JSONObject(response)
+                        result = j.getJSONArray("data")
+                        getBarang(result!!)
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                        Toast.makeText(this@Barang, "Error JSON", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }, Response.ErrorListener { error ->
+                    VolleyLog.d("ERROR", error.message)
+                    Toast.makeText(this@Barang, error.message, Toast.LENGTH_SHORT).show()
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getParams(): Map<String, String> {
+                    return HashMap()
+                }
+            }
+        requestQueue.add(stringRequest)
+    }
+
+
+    private fun getBarang(j: JSONArray) {
+        //Traversing through all the items in the json array
+        for (i in 0 until j.length()) {
+            try {
+                val json = j.getJSONObject(i)
+                list.add(DataBarang(json.getString("namabarang"),json.getString("kategori"),json.getString("hargabarang")))
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        }
+
+        //Setting adapter to show the items in the listview
+        val adapter = Adapter(list)
+        adapter.notifyDataSetChanged()
+
+        //tampilkan data dalam recycler view
+        mRecyclerView.adapter = adapter
+    }
+
+
 
 }

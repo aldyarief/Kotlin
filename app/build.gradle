@@ -37,4 +37,5 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta6'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.android.gms:play-services-location:11.8.0'
+    implementation 'com.android.support:recyclerview-v7:29.0.0'
 }
