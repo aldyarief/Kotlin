@@ -29,15 +29,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 class Barang : AppCompatActivity () {
 
     val list = ArrayList<DataBarang>()
-
-    val listBarang = arrayOf(
-        "Google",
-        "Apple",
-        "Microsoft",
-        "Asus",
-        "Zenpone",
-        "Acer"
-    )
     var name: String? = null
     var pass:kotlin.String? = null
     var server_kategori: String? = null
@@ -75,7 +66,6 @@ class Barang : AppCompatActivity () {
         Spinner= findViewById(R.id.Spinner) as Spinner
         pd = ProgressDialog(this)
         kategori = ArrayList()
-        AmbilKategori()
         kategoriid = findViewById(R.id.kategori) as TextView
         textname = findViewById(R.id.nambar) as EditText
         textharga = findViewById(R.id.harbar) as EditText
@@ -83,8 +73,10 @@ class Barang : AppCompatActivity () {
         server_url = "http://aldry.agustianra.my.id/nitip/barang.php"
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.layoutManager = LinearLayoutManager(this)
-
+        AmbilKategori()
         AmbilBarang()
+
+
 
         Spinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             //this method will execute when we pic an item from the spinner
@@ -142,6 +134,7 @@ class Barang : AppCompatActivity () {
                             kategori!!.clear()
                             textname!!.requestFocus()
                             AmbilKategori()
+                            AmbilBarang()
                         } else {
                             Toast.makeText(this@Barang, pesan, Toast.LENGTH_SHORT).show()
                             requestQueue.stop()
@@ -342,7 +335,4 @@ class Barang : AppCompatActivity () {
         //tampilkan data dalam recycler view
         mRecyclerView.adapter = adapter
     }
-
-
-
 }

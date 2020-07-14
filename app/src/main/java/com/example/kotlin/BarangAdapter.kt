@@ -22,6 +22,8 @@ class Adapter(private val list:ArrayList<DataBarang>) : RecyclerView.Adapter<Ada
         holder.view.katbarang.text = list?.get(position)?.kategoribarang
         holder.view.harbarang.text = list?.get(position)?.harbarang
 
+
+
     }
 
     class Holder(val view: View) : RecyclerView.ViewHolder(view)
