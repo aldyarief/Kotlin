@@ -1,5 +1,6 @@
 package com.example.kotlin
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.synnapps.carouselview.CarouselView
 import com.synnapps.carouselview.ImageListener
@@ -30,9 +32,9 @@ class Dashboard : AppCompatActivity() {
     var katbar:LinearLayout?= null
     var lokasi:LinearLayout?= null
     var sampleImages = intArrayOf(
-        R.drawable.shoppe3,
-        R.drawable.shoppe2,
-        R.drawable.shoppe
+        R.drawable.retail3,
+        R.drawable.retail2,
+        R.drawable.retail1
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,12 +62,7 @@ class Dashboard : AppCompatActivity() {
         carouselView.setImageListener(imageListener);
 
         logout!!.setOnClickListener {
-            val editor = sharedPreferences!!.edit()
-            editor.putBoolean("session_status",false)
-            editor.apply();
-            val intent = Intent(this@Dashboard, Login::class.java)
-            finish()
-            startActivity(intent)
+            showDialog()
         }
 
         masteruser!!.setOnClickListener {
@@ -82,9 +79,7 @@ class Dashboard : AppCompatActivity() {
         }
 
         katbar!!.setOnClickListener {
-            val intent = Intent(this@Dashboard, KategoriBarang::class.java)
-            finish()
-            startActivity(intent)
+            KirimKatBar()
         }
 
     }
@@ -123,6 +118,30 @@ class Dashboard : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun KirimKatBar() {
+        val intent = Intent(this@Dashboard, KategoriBarang::class.java)
+        intent.putExtra("name", name!!.trim())
+        intent.putExtra("pass", pass!!.trim())
+        intent.putExtra("userid", userid!!.trim())
+        intent.putExtra("user", user!!.trim())
+        intent.putExtra("barang", barang!!.trim())
+        intent.putExtra("beli", beli!!.trim())
+        intent.putExtra("jual", jual!!.trim())
+        intent.putExtra("koreksi", koreksi!!.trim())
+        intent.putExtra("laporan", laporan!!.trim())
+        finish()
+        startActivity(intent)
+    }
+
+    private fun Exit() {
+        val editor = sharedPreferences!!.edit()
+        editor.putBoolean("session_status",false)
+        editor.apply();
+        val intent = Intent(this@Dashboard, Login::class.java)
+        finish()
+        startActivity(intent)
+
+    }
 
     var imageListener: ImageListener = object : ImageListener {
         override fun setImageForPosition(position: Int, imageView: ImageView) {
@@ -130,4 +149,33 @@ class Dashboard : AppCompatActivity() {
             imageView.setImageResource(sampleImages[position])
         }
     }
+
+    private fun showDialog(){
+        // Late initialize an alert dialog object
+        lateinit var dialog: AlertDialog
+        // Initialize a new instance of alert dialog builder object
+        val builder = AlertDialog.Builder(this)
+        // Set a title for alert dialog
+        builder.setTitle("MyShop")
+        // Set a message for alert dialog
+        builder.setMessage("Yakin anda akan logut?")
+
+        // On click listener for dialog buttons
+        val dialogClickListener = DialogInterface.OnClickListener{ _, which ->
+            when(which){
+                DialogInterface.BUTTON_POSITIVE -> Exit()
+                DialogInterface.BUTTON_NEGATIVE -> dialog.dismiss();
+            }
+        }
+
+        // Set the alert dialog positive/yes button
+        builder.setPositiveButton("YES",dialogClickListener)
+        // Set the alert dialog negative/no button
+        builder.setNegativeButton("NO",dialogClickListener)
+        // Initialize the AlertDialog using builder object
+        dialog = builder.create()
+        // Finally, display the alert dialog
+        dialog.show()
+    }
+
 }

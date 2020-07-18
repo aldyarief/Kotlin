@@ -264,7 +264,7 @@ class Barang : AppCompatActivity () {
 
 
     override fun onBackPressed() {
-        startActivity(Intent(this, Dashboard::class.java))
+        val intent = Intent(this, Dashboard::class.java)
         intent.putExtra("name", name!!.trim())
         intent.putExtra("pass", pass!!.trim())
         intent.putExtra("userid", userid!!.trim())
@@ -275,6 +275,7 @@ class Barang : AppCompatActivity () {
         intent.putExtra("koreksi", koreksi!!.trim())
         intent.putExtra("laporan", laporan!!.trim())
         finish()
+        startActivity(intent)
     }
 
 

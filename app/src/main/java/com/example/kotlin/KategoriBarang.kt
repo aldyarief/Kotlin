@@ -40,8 +40,6 @@ class KategoriBarang : AppCompatActivity() {
     var jual:kotlin.String? = null
     var koreksi:kotlin.String? = null
     var laporan:kotlin.String? = null
-    var username:kotlin.String? = null
-    var password:kotlin.String? = null
     var pd: ProgressDialog? = null
     private var listView: ListView? = null
     private var textname: EditText? = null
@@ -53,6 +51,7 @@ class KategoriBarang : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_kategori_barang)
+        userid = intent.getStringExtra("userid")
         name = intent.getStringExtra("name")
         pass = intent.getStringExtra("pass")
         userid = intent.getStringExtra("userid")
@@ -168,7 +167,7 @@ class KategoriBarang : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        startActivity(Intent(this, Dashboard::class.java))
+        val intent = Intent(this, Dashboard::class.java)
         intent.putExtra("name", name!!.trim())
         intent.putExtra("pass", pass!!.trim())
         intent.putExtra("userid", userid!!.trim())
@@ -179,6 +178,7 @@ class KategoriBarang : AppCompatActivity() {
         intent.putExtra("koreksi", koreksi!!.trim())
         intent.putExtra("laporan", laporan!!.trim())
         finish()
+        startActivity(intent)
     }
 
     private fun AmbilKategori() {

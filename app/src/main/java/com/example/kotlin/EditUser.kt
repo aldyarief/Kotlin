@@ -1,6 +1,7 @@
 package com.example.kotlin
 
 import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyLog
@@ -65,7 +67,7 @@ class EditUser : AppCompatActivity() {
             val passlama = textpaslama!!.text.toString().trim { it <= ' ' }
             val passbaru = textpasbaru!!.text.toString().trim { it <= ' ' }
             if (!passlama.isEmpty() && !passbaru.isEmpty()) {
-                simpanData(passlama, passbaru, userid!!)
+                showDialog()
             } else if (passlama.isEmpty()) {
                 txtpaslama!!.error = "username tidak boleh kosong"
                 txtpaslama!!.requestFocus()
@@ -141,9 +143,37 @@ class EditUser : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun showDialog() {
-        if (!pd!!.isShowing) pd!!.show()
+    private fun showDialog(){
+        // Late initialize an alert dialog object
+        lateinit var dialog: AlertDialog
+        val passlama = textpaslama!!.text.toString().trim { it <= ' ' }
+        val passbaru = textpasbaru!!.text.toString().trim { it <= ' ' }
+
+        // Initialize a new instance of alert dialog builder object
+        val builder = AlertDialog.Builder(this)
+        // Set a title for alert dialog
+        builder.setTitle("Ganti Password")
+        // Set a message for alert dialog
+        builder.setMessage("Yakin akan mengubah password?")
+
+        // On click listener for dialog buttons
+        val dialogClickListener = DialogInterface.OnClickListener{ _, which ->
+            when(which){
+                DialogInterface.BUTTON_POSITIVE -> simpanData(passlama, passbaru, userid!!)
+                DialogInterface.BUTTON_NEGATIVE -> dialog.dismiss();
+            }
+        }
+
+        // Set the alert dialog positive/yes button
+        builder.setPositiveButton("YES",dialogClickListener)
+        // Set the alert dialog negative/no button
+        builder.setNegativeButton("NO",dialogClickListener)
+        // Initialize the AlertDialog using builder object
+        dialog = builder.create()
+        // Finally, display the alert dialog
+        dialog.show()
     }
+
 
 
     private fun hideDialog() {
