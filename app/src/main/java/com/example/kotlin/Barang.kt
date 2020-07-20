@@ -24,21 +24,22 @@ import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.list_barang.view.*
 import kotlinx.android.synthetic.main.activity_barang.*
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.card.MaterialCardView
 
 
-class Barang : AppCompatActivity () {
+class Barang : AppCompatActivity (), OnBarangItemClickListner {
 
     val list = ArrayList<DataBarang>()
     var name: String? = null
-    var pass:kotlin.String? = null
+    var pass: String? = null
     var server_kategori: String? = null
-    var userid:kotlin.String? = null
-    var user:kotlin.String? = null
-    var barang:kotlin.String? = null
-    var beli:kotlin.String? = null
-    var jual:kotlin.String? = null
-    var koreksi:kotlin.String? = null
-    var laporan:kotlin.String? = null
+    var userid: String? = null
+    var user: String? = null
+    var barang: String? = null
+    var beli: String? = null
+    var jual: String? = null
+    var koreksi: String? = null
+    var laporan: String? = null
     private var Spinner: Spinner? = null
     private var kategori: ArrayList<String>? = null
     private var result: JSONArray? = null
@@ -46,7 +47,7 @@ class Barang : AppCompatActivity () {
     var kategoriid: TextView? = null
     private var textname: EditText? = null
     private var textharga: EditText? = null
-    var buttonsave: com.google.android.material.card.MaterialCardView?= null
+    var buttonsave: MaterialCardView?= null
     var server_url: String? = null
     var server_barang: String? = null
 
@@ -69,7 +70,7 @@ class Barang : AppCompatActivity () {
         kategoriid = findViewById(R.id.kategori) as TextView
         textname = findViewById(R.id.nambar) as EditText
         textharga = findViewById(R.id.harbar) as EditText
-        buttonsave = findViewById<View>(R.id.btnSave) as com.google.android.material.card.MaterialCardView
+        buttonsave = findViewById<View>(R.id.btnSave) as MaterialCardView
         server_url = "http://aldry.agustianra.my.id/nitip/barang.php"
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -323,10 +324,17 @@ class Barang : AppCompatActivity () {
         }
 
         //Setting adapter to show the items in the listview
-        val adapter = Adapter(list)
+        val adapter = Adapter(list,this)
         adapter.notifyDataSetChanged()
 
         //tampilkan data dalam recycler view
         mRecyclerView.adapter = adapter
+    }
+
+    override fun onItemClick(item: DataBarang, position: Int) {
+        textname!!.setText(item.namabarang)
+        kategoriid!!.setText(item.kategoribarang)
+        textharga!!.setText(item.harbarang)
+
     }
 }
