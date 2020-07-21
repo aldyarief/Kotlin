@@ -45,6 +45,7 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
     private var result: JSONArray? = null
     var pd: ProgressDialog? = null
     var kategoriid: TextView? = null
+    var kategoriclick: TextView? = null
     private var textname: EditText? = null
     private var textharga: EditText? = null
     var buttonsave: MaterialCardView?= null
@@ -68,6 +69,7 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
         pd = ProgressDialog(this)
         kategori = ArrayList()
         kategoriid = findViewById(R.id.kategori) as TextView
+        kategoriclick = findViewById(R.id.kategoriclick) as TextView
         textname = findViewById(R.id.nambar) as EditText
         textharga = findViewById(R.id.harbar) as EditText
         buttonsave = findViewById<View>(R.id.btnSave) as MaterialCardView
@@ -317,7 +319,7 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
         for (i in 0 until j.length()) {
             try {
                 val json = j.getJSONObject(i)
-                list.add(DataBarang(json.getString("namabarang"),json.getString("kategori"),json.getString("hargabarang")))
+                list.add(DataBarang(json.getString("namabarang"),json.getString("kategori"),json.getString("hargabarang"),json.getString("idkategori")))
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
@@ -332,9 +334,14 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
     }
 
     override fun onItemClick(item: DataBarang, position: Int) {
+        kategori!!.clear()
         textname!!.setText(item.namabarang)
-        kategoriid!!.setText(item.kategoribarang)
         textharga!!.setText(item.harbarang)
+        kategori!!.add(item.kategoribarang)
+        kategoriclick!!.setText(item.idkategori)
+
+        Spinner!!.setAdapter(ArrayAdapter<String>(this@Barang, android.R.layout.simple_spinner_dropdown_item, kategori!!))
+
 
     }
 }

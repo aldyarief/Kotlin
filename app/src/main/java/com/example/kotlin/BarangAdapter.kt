@@ -25,6 +25,7 @@ class Adapter(private val list:ArrayList<DataBarang>,var clickListner: OnBarangI
         holder.view.namabarang.text = list?.get(position)?.namabarang
         holder.view.katbarang.text = list?.get(position)?.kategoribarang
         holder.view.harbarang.text = list?.get(position)?.harbarang
+        holder.view.idkategori.text = list?.get(position)?.idkategori
         holder.initialize(list?.get(position),clickListner)
     }
 
@@ -32,10 +33,12 @@ class Adapter(private val list:ArrayList<DataBarang>,var clickListner: OnBarangI
         var nambar = view.namabarang
         var katbar = view.katbarang
         var harbar = view.harbarang
+        var idkategori = view.idkategori
         fun initialize(item: DataBarang, action:OnBarangItemClickListner){
             nambar.text = item.namabarang
             katbar.text= item.kategoribarang
             harbar.text = item.harbarang
+            idkategori.text = item.idkategori
 
 
             itemView.setOnClickListener{
@@ -50,3 +53,4 @@ class Adapter(private val list:ArrayList<DataBarang>,var clickListner: OnBarangI
 interface OnBarangItemClickListner{
     fun onItemClick(item: DataBarang, position: Int)
 }
+

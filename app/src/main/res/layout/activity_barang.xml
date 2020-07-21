@@ -129,6 +129,20 @@
                 android:visibility="invisible"
                 android:text="abc"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/kategoriclick"
+                android:textSize="30sp"
+                android:textColor="#000000"
+                tools:ignore="MissingConstraints"
+                app:layout_constraintTop_toBottomOf="@id/Spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:fontFamily="sans-serif"
+                android:visibility="invisible"
+                android:text="abc"/>
+
 
             <LinearLayout
                 android:clipToPadding="false"
