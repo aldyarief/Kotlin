@@ -4,8 +4,6 @@ import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -18,16 +16,14 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.text.NumberFormat
 import java.util.*
 import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.list_barang.view.*
 import kotlinx.android.synthetic.main.activity_barang.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.card.MaterialCardView
 
 
-class Barang : AppCompatActivity (), OnBarangItemClickListner {
+class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClickListner {
 
     val list = ArrayList<DataBarang>()
     var name: String? = null
@@ -51,6 +47,8 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
     var buttonsave: MaterialCardView?= null
     var server_url: String? = null
     var server_barang: String? = null
+    var action: String? = null
+    var nambar: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +72,7 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
         textharga = findViewById(R.id.harbar) as EditText
         buttonsave = findViewById<View>(R.id.btnSave) as MaterialCardView
         server_url = "http://aldry.agustianra.my.id/nitip/barang.php"
+        action= "adddata"
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.layoutManager = LinearLayoutManager(this)
         AmbilKategori()
@@ -99,7 +98,6 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
             val harbar = textharga!!.text.toString().trim { it <= ' '}
             val katbar = kategoriid!!.text.toString().trim { it <= ' '}
 
-
             if (!name.isEmpty() && !harbar.isEmpty()) {
                 showDialog()
             } else if (name.isEmpty()) {
@@ -113,7 +111,7 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
 
     }
 
-    private fun simpanData(name: String,harbar: String,katbar: String,userid: String) {
+    private fun simpanData(name: String,harbar: String,katbar: String,userid: String,action: String,nambar: String) {
         val requestQueue = Volley.newRequestQueue(this@Barang)
         pd!!.setCancelable(false)
         pd!!.setMessage("Harap Menunggu...")
@@ -136,6 +134,7 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
                             textharga!!.text.clear()
                             kategori!!.clear()
                             textname!!.requestFocus()
+                            var action="adddata"
                             AmbilKategori()
                             AmbilBarang()
                         } else {
@@ -159,6 +158,9 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
                     param["harbar"] = harbar
                     param["katbar"] = katbar
                     param["userid"] = userid
+                    param["action"] = action
+                    param["nambar"] = nambar
+
 
                     return param
                 }
@@ -174,6 +176,7 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
         val harbar = textharga!!.text.toString().trim { it <= ' '}
         val katbar = kategoriid!!.text.toString().trim { it <= ' '}
 
+
         // Initialize a new instance of alert dialog builder object
         val builder = AlertDialog.Builder(this)
         // Set a title for alert dialog
@@ -184,7 +187,14 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
         // On click listener for dialog buttons
         val dialogClickListener = DialogInterface.OnClickListener{_,which ->
             when(which){
-                DialogInterface.BUTTON_POSITIVE -> simpanData(name,harbar,katbar,userid!!)
+
+                DialogInterface.BUTTON_POSITIVE ->
+                    if (action.equals("adddata")) {
+                        val nambar ="-"
+                        simpanData(name,harbar,katbar,userid!!, action!!,nambar!!)
+                    } else {
+                        EditData(name,harbar,katbar,userid!!,action!!,nambar!!)
+                    }
                 DialogInterface.BUTTON_NEGATIVE -> dialog.dismiss();
             }
         }
@@ -319,14 +329,14 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
         for (i in 0 until j.length()) {
             try {
                 val json = j.getJSONObject(i)
-                list.add(DataBarang(json.getString("namabarang"),json.getString("kategori"),json.getString("hargabarang"),json.getString("idkategori")))
+                list.add(DataBarang(json.getString("namabarang"),json.getString("kategori"),json.getString("hargabarang"),json.getString("idkategori"),json.getString("idbarang")))
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
         }
 
         //Setting adapter to show the items in the listview
-        val adapter = Adapter(list,this)
+        val adapter = Adapter(list,this,this)
         adapter.notifyDataSetChanged()
 
         //tampilkan data dalam recycler view
@@ -334,8 +344,10 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
     }
 
     override fun onItemClick(item: DataBarang, position: Int) {
+        action = "editdata"
         kategori!!.clear()
         textname!!.setText(item.namabarang)
+        nambar = item.idbarang
         textharga!!.setText(item.harbarang)
         kategori!!.add(item.kategoribarang)
         kategoriclick!!.setText(item.idkategori)
@@ -343,5 +355,120 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner {
         Spinner!!.setAdapter(ArrayAdapter<String>(this@Barang, android.R.layout.simple_spinner_dropdown_item, kategori!!))
 
 
+    }
+
+    override fun onClick(item: DataBarang, position: Int) {
+        action = "deletedata"
+        Toast.makeText(this@Barang, action, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun EditData(name: String,harbar: String,katbar: String,userid: String,action: String,nambar: String) {
+        val requestQueue = Volley.newRequestQueue(this@Barang)
+        pd!!.setCancelable(false)
+        pd!!.setMessage("Harap Menunggu...")
+
+        val stringRequest: StringRequest =
+            object : StringRequest(
+                Method.POST, server_url,
+                Response.Listener { response ->
+                    Log.d("response", response)
+                    hideDialog()
+                    try {
+                        val jObject = JSONObject(response)
+                        val pesan = jObject.getString("pesan")
+                        val hasil = jObject.getString("result")
+
+                        if (hasil.equals("true", ignoreCase = true)) {
+                            requestQueue.stop()
+                            Toast.makeText(this@Barang, pesan, Toast.LENGTH_SHORT).show()
+                            textname!!.text.clear()
+                            textharga!!.text.clear()
+                            kategori!!.clear()
+                            textname!!.requestFocus()
+                            list.clear()
+                            AmbilKategori()
+                            AmbilBarang()
+                            var action="adddata"
+                        } else {
+                            Toast.makeText(this@Barang, pesan, Toast.LENGTH_SHORT).show()
+                            requestQueue.stop()
+                            textname!!.text.clear()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                        Toast.makeText(this@Barang, "Error JSON", Toast.LENGTH_SHORT).show()
+                    }
+                }, Response.ErrorListener { error ->
+                    VolleyLog.d("ERROR", error.message)
+                    Toast.makeText(this@Barang, error.message, Toast.LENGTH_SHORT).show()
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getParams(): Map<String, String> {
+                    val param: MutableMap<String, String> =
+                        HashMap()
+                    param["name"] = name
+                    param["harbar"] = harbar
+                    param["katbar"] = katbar
+                    param["userid"] = userid
+                    param["action"] = action
+                    param["nambar"] = nambar
+
+                    return param
+                }
+            }
+        requestQueue.add(stringRequest)
+    }
+
+    private fun DeleteData(name: String,harbar: String,katbar: String,userid: String,action: String) {
+        val requestQueue = Volley.newRequestQueue(this@Barang)
+        pd!!.setCancelable(false)
+        pd!!.setMessage("Harap Menunggu...")
+
+        val stringRequest: StringRequest =
+            object : StringRequest(
+                Method.POST, server_url,
+                Response.Listener { response ->
+                    Log.d("response", response)
+                    hideDialog()
+                    try {
+                        val jObject = JSONObject(response)
+                        val pesan = jObject.getString("pesan")
+                        val hasil = jObject.getString("result")
+
+                        if (hasil.equals("true", ignoreCase = true)) {
+                            requestQueue.stop()
+                            Toast.makeText(this@Barang, pesan, Toast.LENGTH_SHORT).show()
+                            textname!!.text.clear()
+                            textharga!!.text.clear()
+                            kategori!!.clear()
+                            textname!!.requestFocus()
+                            AmbilKategori()
+                            AmbilBarang()
+                        } else {
+                            Toast.makeText(this@Barang, pesan, Toast.LENGTH_SHORT).show()
+                            requestQueue.stop()
+                            textname!!.text.clear()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                        Toast.makeText(this@Barang, "Error JSON", Toast.LENGTH_SHORT).show()
+                    }
+                }, Response.ErrorListener { error ->
+                    VolleyLog.d("ERROR", error.message)
+                    Toast.makeText(this@Barang, error.message, Toast.LENGTH_SHORT).show()
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getParams(): Map<String, String> {
+                    val param: MutableMap<String, String> =
+                        HashMap()
+                    param["name"] = name
+                    param["harbar"] = harbar
+                    param["katbar"] = katbar
+                    param["userid"] = userid
+
+                    return param
+                }
+            }
+        requestQueue.add(stringRequest)
     }
 }
