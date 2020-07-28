@@ -182,8 +182,11 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClick
         // Set a title for alert dialog
         builder.setTitle("Master Barang")
         // Set a message for alert dialog
-        builder.setMessage("Yakin anda menyimpan data barang?")
-
+        if (action.equals("deletedata")) {
+            builder.setMessage("Yakin akan menghapus data barang?")
+        } else {
+            builder.setMessage("Yakin anda menyimpan data barang?")
+        }
         // On click listener for dialog buttons
         val dialogClickListener = DialogInterface.OnClickListener{_,which ->
             when(which){
@@ -192,8 +195,10 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClick
                     if (action.equals("adddata")) {
                         val nambar ="-"
                         simpanData(name,harbar,katbar,userid!!, action!!,nambar!!)
-                    } else {
+                    } else if (action.equals("adddata")) {
                         EditData(name,harbar,katbar,userid!!,action!!,nambar!!)
+                    } else {
+                        DeleteData(name,harbar,katbar,userid!!,action!!,nambar!!)
                     }
                 DialogInterface.BUTTON_NEGATIVE -> dialog.dismiss();
             }
@@ -354,12 +359,18 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClick
 
         Spinner!!.setAdapter(ArrayAdapter<String>(this@Barang, android.R.layout.simple_spinner_dropdown_item, kategori!!))
 
-
     }
 
     override fun onClick(item: DataBarang, position: Int) {
         action = "deletedata"
-        Toast.makeText(this@Barang, action, Toast.LENGTH_SHORT).show()
+        kategori!!.clear()
+        textname!!.setText(item.namabarang)
+        nambar = item.idbarang
+        textharga!!.setText(item.harbarang)
+        kategori!!.add(item.kategoribarang)
+        kategoriclick!!.setText(item.idkategori)
+
+        Spinner!!.setAdapter(ArrayAdapter<String>(this@Barang, android.R.layout.simple_spinner_dropdown_item, kategori!!))
     }
 
     private fun EditData(name: String,harbar: String,katbar: String,userid: String,action: String,nambar: String) {
@@ -419,7 +430,7 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClick
         requestQueue.add(stringRequest)
     }
 
-    private fun DeleteData(name: String,harbar: String,katbar: String,userid: String,action: String) {
+    private fun DeleteData(name: String,harbar: String,katbar: String,userid: String,action: String,nambar: String) {
         val requestQueue = Volley.newRequestQueue(this@Barang)
         pd!!.setCancelable(false)
         pd!!.setMessage("Harap Menunggu...")
@@ -442,6 +453,7 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClick
                             textharga!!.text.clear()
                             kategori!!.clear()
                             textname!!.requestFocus()
+                            list.clear()
                             AmbilKategori()
                             AmbilBarang()
                         } else {
@@ -465,6 +477,8 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClick
                     param["harbar"] = harbar
                     param["katbar"] = katbar
                     param["userid"] = userid
+                    param["action"] = action
+                    param["nambar"] = nambar
 
                     return param
                 }
