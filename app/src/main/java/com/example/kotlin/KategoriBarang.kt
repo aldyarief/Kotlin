@@ -6,10 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ListView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
@@ -26,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_kategori_barang.*
 import androidx.recyclerview.widget.LinearLayoutManager
 
 
-class KategoriBarang : AppCompatActivity() {
+class KategoriBarang : AppCompatActivity(), OnKategoriItemClickListner, OnKatDeleteItemClickListner {
 
     var buttonsave: com.google.android.material.card.MaterialCardView?= null
     var name: String? = null
@@ -46,7 +43,8 @@ class KategoriBarang : AppCompatActivity() {
     private var kategori: ArrayList<String>? = null
     private var result: JSONArray? = null
     val kat = ArrayList<DataKategori>()
-
+    var action: String? = null
+    var katid: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +65,7 @@ class KategoriBarang : AppCompatActivity() {
         pd = ProgressDialog(this)
         textname = findViewById<View>(R.id.textname) as EditText
         kategori = ArrayList()
-
+        action= "adddata"
         mRecyclerKategori.setHasFixedSize(true)
         mRecyclerKategori.layoutManager = LinearLayoutManager(this)
 
@@ -83,7 +81,7 @@ class KategoriBarang : AppCompatActivity() {
         }
     }
 
-    private fun simpanData(name: String,userid: String) {
+    private fun simpanData(name: String,userid: String,action: String,katid: String) {
         val requestQueue = Volley.newRequestQueue(this@KategoriBarang)
         pd!!.setCancelable(false)
         pd!!.setMessage("Harap Menunggu...")
@@ -104,6 +102,7 @@ class KategoriBarang : AppCompatActivity() {
                             textname!!.text.clear()
                             kategori!!.clear()
                             AmbilKategori()
+                            var action="adddata"
                         } else {
                             Toast.makeText(this@KategoriBarang, pesan, Toast.LENGTH_SHORT).show()
                             requestQueue.stop()
@@ -123,6 +122,8 @@ class KategoriBarang : AppCompatActivity() {
                         HashMap()
                     param["name"] = name
                     param["userid"] = userid
+                    param["action"]= action
+                    param["katid"]= katid
                     return param
                 }
             }
@@ -140,12 +141,24 @@ class KategoriBarang : AppCompatActivity() {
         // Set a title for alert dialog
         builder.setTitle("Master Kategori Barang")
         // Set a message for alert dialog
-        builder.setMessage("Yakin anda menyimpan kategori barang?")
-
+        if (action.equals("deletedata")) {
+            builder.setMessage("Yakin akan menghapus data barang?")
+            action = "deletedata"
+        } else {
+            builder.setMessage("Yakin anda menyimpan kategori barang?")
+        }
         // On click listener for dialog buttons
         val dialogClickListener = DialogInterface.OnClickListener{ _, which ->
             when(which){
-                DialogInterface.BUTTON_POSITIVE -> simpanData(name,userid!!)
+                DialogInterface.BUTTON_POSITIVE ->
+                    if (action.equals("adddata")) {
+                        val katid="-"
+                        simpanData(name, userid!!, action!!,katid!!)
+                    } else if  (action.equals("editdata")) {
+                        EditData(name, userid!!, action!!,katid!!)
+                    } else if  (action.equals("deletedata")) {
+                        DeleteData(name, userid!!, action!!,katid!!)
+                    }
                 DialogInterface.BUTTON_NEGATIVE -> dialog.dismiss();
             }
         }
@@ -197,8 +210,7 @@ class KategoriBarang : AppCompatActivity() {
                         getKategori(result!!)
                     } catch (e: JSONException) {
                         e.printStackTrace()
-                        Toast.makeText(this@KategoriBarang, "Error JSON", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(this@KategoriBarang, "Error JSON", Toast.LENGTH_SHORT).show()
                     }
                 }, Response.ErrorListener { error ->
                     VolleyLog.d("ERROR", error.message)
@@ -218,17 +230,133 @@ class KategoriBarang : AppCompatActivity() {
         for (i in 0 until j.length()) {
             try {
                 val json = j.getJSONObject(i)
-                kat.add(DataKategori(json.getString("nama")))
+                kat.add(DataKategori(json.getString("nama"),json.getString("idkategori")))
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
         }
 
         //Setting adapter to show the items in the listview
-        val adapter = KategoriAdapter(kat)
+        val adapter = KategoriAdapter(kat,this,this)
         adapter.notifyDataSetChanged()
 
         //tampilkan data dalam recycler view
         mRecyclerKategori.adapter = adapter
     }
+
+    override fun onItemClick(item: DataKategori, position: Int) {
+        action = "editdata"
+        kategori!!.clear()
+        textname!!.setText(item.namakategori)
+        katid = item.katid
+        kat.clear()
+    }
+
+    override fun onClick(item: DataKategori, position: Int) {
+        action = "deletedata"
+        kategori!!.clear()
+        textname!!.setText(item.namakategori)
+        katid = item.katid
+        kat.clear()
+        showDialog()
+    }
+
+    private fun EditData(name: String,userid: String,action: String,katid: String) {
+        val requestQueue = Volley.newRequestQueue(this@KategoriBarang)
+        pd!!.setCancelable(false)
+        pd!!.setMessage("Harap Menunggu...")
+        val stringRequest: StringRequest =
+            object : StringRequest(
+                Method.POST, server_url,
+                Response.Listener { response ->
+                    Log.d("response", response)
+                    hideDialog()
+                    try {
+                        val jObject = JSONObject(response)
+                        val pesan = jObject.getString("pesan")
+                        val hasil = jObject.getString("result")
+
+                        if (hasil.equals("true", ignoreCase = true)) {
+                            requestQueue.stop()
+                            Toast.makeText(this@KategoriBarang, pesan, Toast.LENGTH_SHORT).show()
+                            textname!!.text.clear()
+                            kategori!!.clear()
+                            AmbilKategori()
+                            var action="adddata"
+                        } else {
+                            Toast.makeText(this@KategoriBarang, pesan, Toast.LENGTH_SHORT).show()
+                            requestQueue.stop()
+                            textname!!.text.clear()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                        Toast.makeText(this@KategoriBarang, "Error JSON", Toast.LENGTH_SHORT).show()
+                    }
+                }, Response.ErrorListener { error ->
+                    VolleyLog.d("ERROR", error.message)
+                    Toast.makeText(this@KategoriBarang, error.message, Toast.LENGTH_SHORT).show()
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getParams(): Map<String, String> {
+                    val param: MutableMap<String, String> =
+                        HashMap()
+                    param["name"] = name
+                    param["userid"] = userid
+                    param["action"]= action
+                    param["katid"]= katid
+                    return param
+                }
+            }
+        requestQueue.add(stringRequest)
+    }
+
+    private fun DeleteData(name: String,userid: String,action: String,katid: String) {
+        val requestQueue = Volley.newRequestQueue(this@KategoriBarang)
+        pd!!.setCancelable(false)
+        pd!!.setMessage("Harap Menunggu...")
+        val stringRequest: StringRequest =
+            object : StringRequest(
+                Method.POST, server_url,
+                Response.Listener { response ->
+                    Log.d("response", response)
+                    hideDialog()
+                    try {
+                        val jObject = JSONObject(response)
+                        val pesan = jObject.getString("pesan")
+                        val hasil = jObject.getString("result")
+
+                        if (hasil.equals("true", ignoreCase = true)) {
+                            requestQueue.stop()
+                            Toast.makeText(this@KategoriBarang, pesan, Toast.LENGTH_SHORT).show()
+                            textname!!.text.clear()
+                            kategori!!.clear()
+                            AmbilKategori()
+                            var action="adddata"
+                        } else {
+                            Toast.makeText(this@KategoriBarang, pesan, Toast.LENGTH_SHORT).show()
+                            requestQueue.stop()
+                            textname!!.text.clear()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                        Toast.makeText(this@KategoriBarang, "Error JSON", Toast.LENGTH_SHORT).show()
+                    }
+                }, Response.ErrorListener { error ->
+                    VolleyLog.d("ERROR", error.message)
+                    Toast.makeText(this@KategoriBarang, error.message, Toast.LENGTH_SHORT).show()
+                }) {
+                @Throws(AuthFailureError::class)
+                override fun getParams(): Map<String, String> {
+                    val param: MutableMap<String, String> =
+                        HashMap()
+                    param["name"] = name
+                    param["userid"] = userid
+                    param["action"]= action
+                    param["katid"]= katid
+                    return param
+                }
+            }
+        requestQueue.add(stringRequest)
+    }
+
 }

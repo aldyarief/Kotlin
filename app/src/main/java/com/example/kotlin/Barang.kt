@@ -184,6 +184,7 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClick
         // Set a message for alert dialog
         if (action.equals("deletedata")) {
             builder.setMessage("Yakin akan menghapus data barang?")
+            action="deletedata"
         } else {
             builder.setMessage("Yakin anda menyimpan data barang?")
         }
@@ -195,9 +196,10 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClick
                     if (action.equals("adddata")) {
                         val nambar ="-"
                         simpanData(name,harbar,katbar,userid!!, action!!,nambar!!)
-                    } else if (action.equals("adddata")) {
+                    } else if (action.equals("editdata")) {
                         EditData(name,harbar,katbar,userid!!,action!!,nambar!!)
-                    } else {
+                    } else if (action.equals("deletedata")){
+                        action="deletedata"
                         DeleteData(name,harbar,katbar,userid!!,action!!,nambar!!)
                     }
                 DialogInterface.BUTTON_NEGATIVE -> dialog.dismiss();
@@ -371,6 +373,7 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClick
         kategoriclick!!.setText(item.idkategori)
 
         Spinner!!.setAdapter(ArrayAdapter<String>(this@Barang, android.R.layout.simple_spinner_dropdown_item, kategori!!))
+        showDialog()
     }
 
     private fun EditData(name: String,harbar: String,katbar: String,userid: String,action: String,nambar: String) {
@@ -456,6 +459,7 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClick
                             list.clear()
                             AmbilKategori()
                             AmbilBarang()
+                            var action="adddata"
                         } else {
                             Toast.makeText(this@Barang, pesan, Toast.LENGTH_SHORT).show()
                             requestQueue.stop()

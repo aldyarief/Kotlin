@@ -70,7 +70,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_delete"
                         android:layout_alignParentRight="true"
-                        android:id="@+id/menu"/>
+                        android:id="@+id/menudelete"/>
                 </RelativeLayout>
                 <TextView
                     android:layout_width="match_parent"

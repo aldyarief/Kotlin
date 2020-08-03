@@ -30,7 +30,7 @@ class Dashboard : AppCompatActivity() {
     var logout:LinearLayout?= null
     var masterbarang:LinearLayout?= null
     var katbar:LinearLayout?= null
-    var lokasi:LinearLayout?= null
+    var penjualan:LinearLayout?= null
     var sampleImages = intArrayOf(
         R.drawable.retail3,
         R.drawable.retail2,
@@ -55,6 +55,7 @@ class Dashboard : AppCompatActivity() {
         masterbarang = findViewById<View>(R.id.barang) as LinearLayout
         katbar = findViewById<View>(R.id.katbrg) as LinearLayout
         logout = findViewById<View>(R.id.logout) as LinearLayout
+        penjualan = findViewById<View>(R.id.jual) as LinearLayout
 
 
         val carouselView = findViewById(R.id.carouselView) as CarouselView;
@@ -80,6 +81,12 @@ class Dashboard : AppCompatActivity() {
 
         katbar!!.setOnClickListener {
             KirimKatBar()
+        }
+
+        penjualan!!.setOnClickListener {
+            val intent = Intent(this@Dashboard, Penjualan::class.java)
+            finish()
+            startActivity(intent)
         }
 
     }
