@@ -1,26 +1,31 @@
 package com.example.kotlin
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.annotation.Nullable
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyLog
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.card.MaterialCardView
+import kotlinx.android.synthetic.main.activity_barang.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
-import androidx.appcompat.app.AlertDialog
-import kotlinx.android.synthetic.main.activity_barang.*
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.card.MaterialCardView
 
 
 class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClickListner {
@@ -49,6 +54,11 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClick
     var server_barang: String? = null
     var action: String? = null
     var nambar: String? = null
+    var btnChoose:Button? = null
+    private val SELECT_IMAGE = 100
+    var bitmap: Bitmap? = null
+    var gambarUpload: ImageView? = null
+    var imgDecodableString: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,11 +83,17 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClick
         buttonsave = findViewById<View>(R.id.btnSave) as MaterialCardView
         server_url = "http://aldry.agustianra.my.id/nitip/barang.php"
         action= "adddata"
+        btnChoose = findViewById(R.id.btnPick)
+        AmbilBarang()
+        AmbilKategori()
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.layoutManager = LinearLayoutManager(this)
-        AmbilKategori()
-        AmbilBarang()
 
+
+        btnChoose!!.setOnClickListener(View.OnClickListener {
+            val i = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(i, SELECT_IMAGE)
+        })
 
 
         Spinner!!.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -488,5 +504,24 @@ class Barang : AppCompatActivity (), OnBarangItemClickListner, OnDeleteItemClick
                 }
             }
         requestQueue.add(stringRequest)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, @Nullable data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SELECT_IMAGE && resultCode == Activity.RESULT_OK && null != data) {
+            val selectedImage = data.data
+            val filePathColumn =
+                arrayOf(MediaStore.Images.Media.DATA)
+            val cursor = contentResolver.query(
+                selectedImage!!,
+                filePathColumn, null, null, null
+            )
+            cursor!!.moveToFirst()
+            val columnIndex = cursor.getColumnIndex(filePathColumn[0])
+            val picturePath = cursor.getString(columnIndex)
+            cursor.close()
+            val imageView: ImageView = findViewById(R.id.image_view)
+            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath))
+        }
     }
 }
